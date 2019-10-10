@@ -25,20 +25,20 @@ public class DummyReunionApiServiceTest {
     private ReunionApiService apiService;
     private List<String> mailsPourTests;
     private Calendar calendarPourTests;
+    List<Reunion> reunions = new ArrayList<>();
 
     @Before
     public void setup()
     {
         apiService = DI.getNewInstanceApiService();
+
         mailsPourTests = Arrays.asList("test1@gmail.com", "test2@gmail.com");
         calendarPourTests = Calendar.getInstance();
         calendarPourTests.set(2019,10,10,11,33);
-    }
 
-    @Test
-    public void getReunionsWithSuccess()
-    {
-        List<Reunion> reunions = new ArrayList<>();
+        reunions.clear();
+        LIST_REUNIONS.clear();
+
         reunions.add(new Reunion(mailsPourTests, "test1", "test1", calendarPourTests));
         reunions.add(new Reunion(mailsPourTests, "test2", "test2", calendarPourTests));
         reunions.add(new Reunion(mailsPourTests, "test3", "test3", calendarPourTests));
@@ -48,7 +48,11 @@ public class DummyReunionApiServiceTest {
         {
             LIST_REUNIONS.add(reunions.get(i));
         }
+    }
 
+    @Test
+    public void getReunionsWithSuccess()
+    {
         List<Reunion> finalListReunions = apiService.getReunions();
 
         //assertThat(reunions, IsIterableContainingInAnyOrder.containsInAnyOrder(finalListReunions.toArray()));
@@ -57,10 +61,18 @@ public class DummyReunionApiServiceTest {
     }
 
     @Test
-    public void deleteReunion() {
+    public void deleteReunionWithSuccess()
+    {
+        Reunion reunion = apiService.getReunions().get(0);
+        apiService.deleteReunion(reunion);
+        assertFalse(apiService.getReunions().contains(reunion));
     }
 
     @Test
-    public void addReunion() {
+    public void addReunion()
+    {
+        Reunion reunion = new Reunion(mailsPourTests, "test5", "test5", calendarPourTests);
+        apiService.addReunion(reunion);
+        assertTrue(apiService.getReunions().contains(reunion));
     }
 }
