@@ -34,6 +34,7 @@ public class Reunion
     }
 
     //////////////////// GETTERS ////////////////////
+
     public List<String> getmEmails() {
         return mEmails;
     }
