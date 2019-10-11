@@ -4,7 +4,6 @@ package com.example.mareu.Controler.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -15,7 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.mareu.Controler.Services.ReunionApiService;
+import com.example.mareu.Model.Di.DI;
+import com.example.mareu.Model.Services.ReunionApiService;
 import com.example.mareu.Controler.Ui.ReunionListRecyclerViewAdapter;
 import com.example.mareu.Model.Reunion;
 import com.example.mareu.R;
@@ -42,6 +42,11 @@ public class ListReunionsFragment extends Fragment
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mApiService = DI.getNeighbourApiService();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

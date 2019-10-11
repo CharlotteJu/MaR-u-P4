@@ -1,7 +1,7 @@
 package com.example.mareu;
 
-import com.example.mareu.Controler.Di.DI;
-import com.example.mareu.Controler.Services.ReunionApiService;
+import com.example.mareu.Model.Di.DI;
+import com.example.mareu.Model.Services.ReunionApiService;
 import com.example.mareu.Model.Reunion;
 
 //import org.hamcrest.collection.IsIterableContainingInAnyOrder;
@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
-import static com.example.mareu.Controler.Services.DummyReunionApiService.LIST_REUNIONS;
+import static com.example.mareu.Model.Services.DummyReunionApiService.LIST_REUNIONS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;

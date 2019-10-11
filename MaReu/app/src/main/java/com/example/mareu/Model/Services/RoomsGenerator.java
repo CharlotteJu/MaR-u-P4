@@ -1,4 +1,4 @@
-package com.example.mareu.Controler.Services;
+package com.example.mareu.Model.Services;
 
 public abstract class RoomsGenerator {
 

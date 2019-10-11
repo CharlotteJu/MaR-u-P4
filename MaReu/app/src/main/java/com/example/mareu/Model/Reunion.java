@@ -2,6 +2,7 @@ package com.example.mareu.Model;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 public class Reunion
 {
@@ -68,5 +69,13 @@ public class Reunion
 
     public void setmTime(Calendar mTime) {
         this.mTime = mTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reunion reunion = (Reunion) o;
+        return Objects.equals(hashCode(), reunion.hashCode());
     }
 }
