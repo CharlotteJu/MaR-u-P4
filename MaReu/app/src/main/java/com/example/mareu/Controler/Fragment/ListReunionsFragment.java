@@ -15,7 +15,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+<<<<<<< Updated upstream
 import com.example.mareu.Controler.Services.ReunionApiService;
+=======
+import com.example.mareu.Di.DI;
+import com.example.mareu.Services.*;
+>>>>>>> Stashed changes
 import com.example.mareu.Controler.Ui.ReunionListRecyclerViewAdapter;
 import com.example.mareu.Model.Reunion;
 import com.example.mareu.R;
