@@ -1,8 +1,12 @@
+<<<<<<< Updated upstream:MaReu/app/src/main/java/com/example/mareu/Services/RoomsGenerator.java
 <<<<<<< Updated upstream:MaReu/app/src/main/java/com/example/mareu/Controler/Services/RoomsGenerator.java
 package com.example.mareu.Controler.Services;
 =======
 package com.example.mareu.Services;
 >>>>>>> Stashed changes:MaReu/app/src/main/java/com/example/mareu/Services/RoomsGenerator.java
+=======
+package com.example.mareu.Services;
+>>>>>>> Stashed changes:MaReu/app/src/main/java/com/example/mareu/Model/Services/RoomsGenerator.java
 
 public abstract class RoomsGenerator {
 

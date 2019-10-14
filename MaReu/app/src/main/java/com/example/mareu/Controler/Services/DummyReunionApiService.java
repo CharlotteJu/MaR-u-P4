@@ -1,5 +1,9 @@
 <<<<<<< Updated upstream:MaReu/app/src/main/java/com/example/mareu/Controler/Services/DummyReunionApiService.java
+<<<<<<< Updated upstream:MaReu/app/src/main/java/com/example/mareu/Controler/Services/DummyReunionApiService.java
 package com.example.mareu.Controler.Services;
+=======
+package com.example.mareu.Services;
+>>>>>>> Stashed changes:MaReu/app/src/main/java/com/example/mareu/Services/DummyReunionApiService.java
 =======
 package com.example.mareu.Services;
 >>>>>>> Stashed changes:MaReu/app/src/main/java/com/example/mareu/Services/DummyReunionApiService.java

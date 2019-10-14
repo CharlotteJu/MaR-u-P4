@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream:MaReu/app/src/main/java/com/example/mareu/Di/DI.java
 <<<<<<< Updated upstream:MaReu/app/src/main/java/com/example/mareu/Controler/Di/DI.java
 package com.example.mareu.Controler.Di;
 
@@ -9,6 +10,12 @@ package com.example.mareu.Di;
 import com.example.mareu.Services.DummyReunionApiService;
 import com.example.mareu.Services.ReunionApiService;
 >>>>>>> Stashed changes:MaReu/app/src/main/java/com/example/mareu/Di/DI.java
+=======
+package com.example.mareu.Di;
+
+import com.example.mareu.Services.DummyReunionApiService;
+import com.example.mareu.Services.ReunionApiService;
+>>>>>>> Stashed changes:MaReu/app/src/main/java/com/example/mareu/Model/Di/DI.java
 
 /**
  * Dependency injector to get instance of services

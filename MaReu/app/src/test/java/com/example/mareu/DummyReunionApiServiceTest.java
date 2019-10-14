@@ -1,8 +1,13 @@
 package com.example.mareu;
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import com.example.mareu.Controler.Di.DI;
 import com.example.mareu.Controler.Services.ReunionApiService;
+=======
+import com.example.mareu.Di.DI;
+import com.example.mareu.Services.ReunionApiService;
+>>>>>>> Stashed changes
 =======
 import com.example.mareu.Di.DI;
 import com.example.mareu.Services.ReunionApiService;
@@ -19,7 +24,11 @@ import java.util.Calendar;
 import java.util.List;
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import static com.example.mareu.Controler.Services.DummyReunionApiService.LIST_REUNIONS;
+=======
+import static com.example.mareu.Services.DummyReunionApiService.LIST_REUNIONS;
+>>>>>>> Stashed changes
 =======
 import static com.example.mareu.Services.DummyReunionApiService.LIST_REUNIONS;
 >>>>>>> Stashed changes

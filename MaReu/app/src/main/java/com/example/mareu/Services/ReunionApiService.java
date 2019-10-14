@@ -1,8 +1,12 @@
+<<<<<<< Updated upstream:MaReu/app/src/main/java/com/example/mareu/Services/ReunionApiService.java
 <<<<<<< Updated upstream:MaReu/app/src/main/java/com/example/mareu/Controler/Services/ReunionApiService.java
 package com.example.mareu.Controler.Services;
 =======
 package com.example.mareu.Services;
 >>>>>>> Stashed changes:MaReu/app/src/main/java/com/example/mareu/Services/ReunionApiService.java
+=======
+package com.example.mareu.Services;
+>>>>>>> Stashed changes:MaReu/app/src/main/java/com/example/mareu/Model/Services/ReunionApiService.java
 
 import com.example.mareu.Model.Reunion;
 
