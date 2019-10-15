@@ -7,50 +7,42 @@
     android:layout_height="match_parent"
     tools:context=".Controler.Activity.MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        android:id="@+id/appBarToolbar">
+<com.google.android.material.appbar.AppBarLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:theme="@style/AppTheme.AppBarOverlay"
+android:id="@+id/appBarToolbar">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+<androidx.appcompat.widget.Toolbar
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="?attr/colorPrimary"
+    app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-    </com.google.android.material.appbar.AppBarLayout>
+</com.google.android.material.appbar.AppBarLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/alr_container"
-        android:layout_alignParentRight="true"
-
-
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
-
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    <include layout="@layout/content_main" />
-=======
-=======
->>>>>>> Stashed changes
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/alr_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@id/appBarToolbar"
-        tools:listitem="@layout/fragment_list_reunions" />
+<com.google.android.material.floatingactionbutton.FloatingActionButton
+android:id="@+id/fab"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_alignBottom="@id/activity_main_container"
+android:layout_alignParentRight="true"
 
 
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+android:layout_margin="@dimen/fab_margin"
+app:srcCompat="@android:drawable/ic_dialog_email" />
 
-</RelativeLayout>
+
+
+<FrameLayout
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:layout_alignParentBottom="true"
+android:layout_below="@id/appBarToolbar"
+android:id="@+id/activity_main_container"/>
+
+
+
+
+    </RelativeLayout>

@@ -19,6 +19,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".Controler.Activity.DetailsActivity"
+            android:label="Ma Reu"
+            android:parentActivityName=".Controler.Activity.MainActivity">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Controler.Activity.MainActivity"/>
+
+        </activity>
+
     </application>
 
 </manifest>
