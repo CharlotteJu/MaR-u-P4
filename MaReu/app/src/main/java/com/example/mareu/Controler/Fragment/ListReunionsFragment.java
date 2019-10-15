@@ -16,8 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-
-import com.example.mareu.Services.*;
+import com.example.mareu.Controler.Services.DummyReunionApiService;
+import com.example.mareu.Controler.Services.ReunionApiService;
 import com.example.mareu.Controler.Ui.ReunionListRecyclerViewAdapter;
 import com.example.mareu.Model.Reunion;
 import com.example.mareu.R;

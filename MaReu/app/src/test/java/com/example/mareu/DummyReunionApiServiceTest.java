@@ -1,18 +1,11 @@
 package com.example.mareu;
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-import com.example.mareu.Controler.Di.DI;
 import com.example.mareu.Controler.Services.ReunionApiService;
-=======
 import com.example.mareu.Di.DI;
-import com.example.mareu.Services.ReunionApiService;
->>>>>>> Stashed changes
-=======
-import com.example.mareu.Di.DI;
-import com.example.mareu.Services.ReunionApiService;
->>>>>>> Stashed changes
+
 import com.example.mareu.Model.Reunion;
+import com.example.mareu.Controler.Services.DummyReunionApiService;
+
 
 //import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.junit.Before;
@@ -23,15 +16,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 import static com.example.mareu.Controler.Services.DummyReunionApiService.LIST_REUNIONS;
-=======
-import static com.example.mareu.Services.DummyReunionApiService.LIST_REUNIONS;
->>>>>>> Stashed changes
-=======
-import static com.example.mareu.Services.DummyReunionApiService.LIST_REUNIONS;
->>>>>>> Stashed changes
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
@@ -48,7 +34,7 @@ public class DummyReunionApiServiceTest {
     @Before
     public void setup()
     {
-        apiService = DI.getNewInstanceApiService();
+        apiService = DI.getNeighbourApiService();
 
         mailsPourTests = Arrays.asList("test1@gmail.com", "test2@gmail.com");
         calendarPourTests = Calendar.getInstance();
