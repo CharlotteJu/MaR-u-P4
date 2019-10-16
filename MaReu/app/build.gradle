@@ -36,11 +36,9 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
 
 
-
     ///////// TESTS UNITAIRES ///////////////
 
     testImplementation 'junit:junit:4.12'
-
 
 
     ///////// TESTS INSTRU ///////////////

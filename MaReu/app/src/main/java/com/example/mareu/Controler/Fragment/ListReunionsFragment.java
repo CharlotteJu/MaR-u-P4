@@ -15,7 +15,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.mareu.Controler.Services.ReunionApiService;
+
+
+import com.example.mareu.Services.*;
 import com.example.mareu.Controler.Ui.ReunionListRecyclerViewAdapter;
 import com.example.mareu.Model.Reunion;
 import com.example.mareu.R;
@@ -47,8 +49,9 @@ public class ListReunionsFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_list_reunions, container, false);
+        mApiService = new DummyReunionApiService();
         Context context = v.getContext();
-        mRecyclerView = (RecyclerView) v;
+        mRecyclerView = (RecyclerView) v.findViewById(R.id.fragment_list_reunions);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         initList();

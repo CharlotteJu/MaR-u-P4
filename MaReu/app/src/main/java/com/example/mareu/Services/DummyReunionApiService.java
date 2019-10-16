@@ -1,4 +1,5 @@
-package com.example.mareu.Controler.Services;
+package com.example.mareu.Services;
+
 
 import com.example.mareu.Model.Reunion;
 

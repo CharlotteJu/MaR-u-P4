@@ -1,7 +1,9 @@
-package com.example.mareu.Controler.Di;
 
-import com.example.mareu.Controler.Services.DummyReunionApiService;
-import com.example.mareu.Controler.Services.ReunionApiService;
+package com.example.mareu.Di;
+
+import com.example.mareu.Services.*;
+
+
 
 /**
  * Dependency injector to get instance of services
