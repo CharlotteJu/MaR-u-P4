@@ -26,16 +26,16 @@ public class Reunion
     /**
      * To put the time
      */
-    private Calendar mTime;
+    private String mTime;
 
     /**
      * To put the date
      */
-    private Date mDate;
+    private String mDate;
 
     public Reunion () {}
 
-    public Reunion(List<String> aEmails, Room aRoom, String aSubject, Calendar aTime) {
+    public Reunion(List<String> aEmails, Room aRoom, String aSubject, String aTime) {
         this.mEmails = aEmails;
         this.mRoom = aRoom;
         this.mSubject = aSubject;
@@ -56,11 +56,11 @@ public class Reunion
         return mSubject;
     }
 
-    public Calendar getmTime() {
+    public String getmTime() {
         return mTime;
     }
 
-    public Date getmDate() {
+    public String getmDate() {
         return mDate;
     }
 
@@ -78,11 +78,11 @@ public class Reunion
         this.mSubject = mSubject;
     }
 
-    public void setmTime(Calendar mTime) {
+    public void setmTime(String mTime) {
         this.mTime = mTime;
     }
 
-    public void setmDate(Date mDate) {
+    public void setmDate(String mDate) {
         this.mDate = mDate;
     }
 
@@ -92,5 +92,17 @@ public class Reunion
         if (o == null || getClass() != o.getClass()) return false;
         Reunion reunion = (Reunion) o;
         return Objects.equals(hashCode(), reunion.hashCode());
+    }
+
+    public boolean completeReunion()
+    {
+        if (mEmails != null && mRoom != null && mSubject !=null && mDate!= null && mTime!= null)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

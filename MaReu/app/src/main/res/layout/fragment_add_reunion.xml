@@ -52,21 +52,28 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <Spinner
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:id="@+id/arf_hour"/>
+                android:text="Date"
+                android:gravity="center"
+                android:textSize="@dimen/text_size"
+                android:id="@+id/arf_date_txt"/>
 
-            <Spinner
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:id="@+id/arf_minutes"/>
+                android:text="Heure"
+                android:gravity="center"
+                android:textSize="@dimen/text_size"
+                android:id="@+id/arf_hours_txt"/>
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+
                 android:layout_weight="1"
                 android:id="@+id/arf_date"/>
 
@@ -103,9 +110,9 @@
 
         <!-- List of mails -->
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -114,13 +121,9 @@
                 android:layout_weight="1"
                 android:id="@+id/arf_liste_mails"/>
 
-            <ScrollView
-                 android:layout_width="match_parent"
-                 android:layout_height="match_parent"
-                 android:layout_weight="10"
-                 android:id="@+id/arf_scroll_view_mails"/>
+        </ScrollView>
 
-        </LinearLayout>
+
 
         <!-- Final Button -->
 
@@ -131,7 +134,7 @@
             android:id="@+id/arf_final_button"/>
 
 
-</LinearLayout>
+    </LinearLayout>
 
-    android:id="@+id/arf_finish_button"/>
+
 </ScrollView>

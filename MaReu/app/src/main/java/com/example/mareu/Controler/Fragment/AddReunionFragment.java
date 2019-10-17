@@ -2,6 +2,7 @@ package com.example.mareu.Controler.Fragment;
 
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -19,6 +20,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.mareu.Model.Reunion;
 import com.example.mareu.Model.Room;
@@ -43,22 +47,20 @@ public class AddReunionFragment extends Fragment {
     Spinner mRoomSpinner;
     @BindView(R.id.arf_date)
     Button mDateButton;
-    @BindView(R.id.arf_hour)
-    Spinner mHourSpinner;
-    @BindView(R.id.arf_minutes)
-    Spinner mMinutesSpinner;
+    @BindView(R.id.arf_date_txt)
+    TextView mDateTxt;
+    @BindView(R.id.arf_hours_txt)
+    TextView mHourTxt;
     @BindView(R.id.arf_add_mails_button)
     Button mAddMailsButton;
     @BindView(R.id.arf_mail)
     EditText mMailEditText;
-    @BindView(R.id.arf_scroll_view_mails)
-    ScrollView mScrollViewMails;
     @BindView(R.id.arf_final_button)
     Button mFinalButton;
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private TimePickerDialog.OnTimeSetListener mTimeSetListener;
     private String[] mNameRooms ;
-    private CreateReunionListener mCreateReunionListener;
     private Reunion mReunion;
     private ReunionApiService mApiService;
 
@@ -77,7 +79,7 @@ public class AddReunionFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mApiService = new DummyReunionApiService();
         mReunion = new Reunion();
-
+        mNameRooms = generateNameRooms();
     }
 
     @Override
@@ -87,29 +89,9 @@ public class AddReunionFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_add_reunion, container, false);
         ButterKnife.bind(this, v);
 
-        mNameRooms = generateNameRooms();
+        mReunion.setmSubject(String.valueOf(mSubjectEdit.getText()));
 
         mRoomSpinner.setAdapter(configSpinnerRooms());
-        mHourSpinner.setAdapter(configSpinner(R.array.hour_spinner));
-        mMinutesSpinner.setAdapter(configSpinner(R.array.minutes_spinner));
-
-        mDateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Calendar cal = Calendar.getInstance();
-                int year = cal.get(Calendar.YEAR);
-                int month = cal.get(Calendar.MONTH);
-                int day = cal.get(Calendar.DAY_OF_MONTH);
-
-                DatePickerDialog dialogDate = new DatePickerDialog(getContext(), mDateSetListener,
-                        year, month, day);
-                //block the calendar to current date
-                dialogDate.getDatePicker().setMinDate(System.currentTimeMillis());
-                dialogDate.show();
-            }
-        });
-
         mRoomSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
@@ -130,16 +112,14 @@ public class AddReunionFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
-        mHourSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                int hourRoom = Integer.parseInt(adapterView.getItemAtPosition(position).toString());
-                mReunion.setmTime(hourRoom);
-            }
+        mDateSetListener = generateDatePickerDialog();
+        mTimeSetListener = generateTimePickerDialog();
 
+        mDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
+            public void onClick(View view) {
+                configureDialogTimer();
+                configureDialogCalendar();
             }
         });
 
@@ -147,7 +127,14 @@ public class AddReunionFragment extends Fragment {
             @Override
             public void onClick(View view)
             {
-                mApiService.addReunion(mReunion);
+                if (mReunion.completeReunion())
+                {
+                    mApiService.addReunion(mReunion);
+                }
+                else
+                {
+                    Toast.makeText(getContext(), "Merci de renseigner toutes les informations", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -155,21 +142,14 @@ public class AddReunionFragment extends Fragment {
 
     }
 
+/////////////////////////////CONFIGURE METHODS////////////////////////////////////
 
+
+    /////////////SPINNER//////////////////
     /**
      * Method to give an Adapter for the spinners
-     * @param res : The link with the res spinner file
      * @return adapter
      */
-    private ArrayAdapter<CharSequence> configSpinner (int res)
-    {
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource
-                (getActivity(), res, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        return adapter;
-    }
-
     private ArrayAdapter<String> configSpinnerRooms ()
     {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, mNameRooms);
@@ -192,6 +172,82 @@ public class AddReunionFragment extends Fragment {
             tab[i] = RoomsGenerator.getListRooms()[i].getmName();
         }
         return tab;
+    }
+
+    /////////////DATE//////////////////
+
+    private DatePickerDialog.OnDateSetListener generateDatePickerDialog()
+    {
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                String dayString = String.valueOf(day);
+                String monthString = String.valueOf(month+1);
+
+                if(day < 10)
+                {
+                    dayString = "0" + String.valueOf(day);
+                }
+                if (month+1 < 10)
+                {
+                    monthString = "0" + String.valueOf(month+1);
+                }
+
+                mReunion.setmDate(dayString + "/" + monthString + "/" + year);
+                mDateTxt.setText(dayString + "/" + monthString + "/" + year);
+            }
+        };
+        return dateSetListener;
+    }
+
+    private void configureDialogCalendar() {
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog dialogDate = new DatePickerDialog(getContext(), mDateSetListener,
+                year, month, day);
+        dialogDate.getDatePicker().setMinDate(System.currentTimeMillis());
+        dialogDate.show();
+    }
+
+    /////////////TIME//////////////////
+
+    private TimePickerDialog.OnTimeSetListener generateTimePickerDialog (){
+        TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int hour, int minutes) {
+
+                String hourString = String.valueOf(hour);
+                String minuteString = String.valueOf(minutes);
+
+                if(hour<10)
+                {
+                    hourString = "0" + String.valueOf(hour);
+                }
+                if (minutes<10)
+                {
+                    minuteString = 0 + String.valueOf(minutes);
+                }
+
+                mReunion.setmTime(hourString + ":" + minuteString);
+                mHourTxt.setText(hourString + ":" + minuteString);
+            }
+        };
+        return timeSetListener;
+    }
+
+    private void configureDialogTimer() {
+
+        Calendar cal = Calendar.getInstance();
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        int minute = cal.get(Calendar.MINUTE);
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), mTimeSetListener,
+                hour, minute, true);
+
+        timePickerDialog.show();
     }
 
 
