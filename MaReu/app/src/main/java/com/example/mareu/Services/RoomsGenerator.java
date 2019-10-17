@@ -19,7 +19,7 @@ public abstract class RoomsGenerator {
             new Room("Salle 10", R.drawable.room_10),
     };
 
-    public static Room[] generateRooms()
+    public static Room[] getListRooms()
     {
         return LIST_ROOMS;
     }

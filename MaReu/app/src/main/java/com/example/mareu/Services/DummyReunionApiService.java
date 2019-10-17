@@ -2,6 +2,7 @@
 package com.example.mareu.Services;
 
 import com.example.mareu.Model.Reunion;
+import com.example.mareu.Model.Room;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,8 @@ public class DummyReunionApiService implements ReunionApiService {
         if(LIST_REUNIONS.contains(reunion))
         {
             LIST_REUNIONS.remove(reunion);
+            Room room = reunion.getmRoom();
+            room.getmPlanningThisRoom().remove(reunion);
         }
     }
 
@@ -39,6 +42,8 @@ public class DummyReunionApiService implements ReunionApiService {
         if(!LIST_REUNIONS.contains(reunion))
         {
             LIST_REUNIONS.add(reunion);
+            Room room = reunion.getmRoom();
+            room.getmPlanningThisRoom().add(reunion);
         }
     }
 }

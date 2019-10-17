@@ -75,7 +75,7 @@ public class ReunionListRecyclerViewAdapter extends RecyclerView.Adapter<Reunion
          */
         public void updateInfos (Reunion reunion)
         {
-            mName.setText(reunion.getmRooms() + " - " + reunion.getmTime() + " - " + reunion.getmSubject());
+            mName.setText(reunion.getmRoom() + " - " + reunion.getmTime() + " - " + reunion.getmSubject());
 
             // Cast the list in String
             String mails = "";

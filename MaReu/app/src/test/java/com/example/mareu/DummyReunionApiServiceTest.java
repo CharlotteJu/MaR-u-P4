@@ -1,22 +1,9 @@
 package com.example.mareu;
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-import com.example.mareu.Controler.Di.DI;
-import com.example.mareu.Controler.Services.ReunionApiService;
-=======
 import com.example.mareu.Di.DI;
+import com.example.mareu.Model.Room;
 import com.example.mareu.Services.ReunionApiService;
->>>>>>> Stashed changes
-=======
-import com.example.mareu.Di.DI;
-import com.example.mareu.Services.ReunionApiService;
->>>>>>> Stashed changes
-=======
-import com.example.mareu.Model.Di.DI;
-import com.example.mareu.Model.Services.ReunionApiService;
->>>>>>> fragmentList
+
 import com.example.mareu.Model.Reunion;
 
 //import org.hamcrest.collection.IsIterableContainingInAnyOrder;
@@ -28,19 +15,9 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-import static com.example.mareu.Controler.Services.DummyReunionApiService.LIST_REUNIONS;
-=======
+
 import static com.example.mareu.Services.DummyReunionApiService.LIST_REUNIONS;
->>>>>>> Stashed changes
-=======
-import static com.example.mareu.Services.DummyReunionApiService.LIST_REUNIONS;
->>>>>>> Stashed changes
-=======
-import static com.example.mareu.Model.Services.DummyReunionApiService.LIST_REUNIONS;
->>>>>>> fragmentList
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
@@ -52,7 +29,8 @@ public class DummyReunionApiServiceTest {
     private ReunionApiService apiService;
     private List<String> mailsPourTests;
     private Calendar calendarPourTests;
-    List<Reunion> reunions = new ArrayList<>();
+    private Room roomForTest;
+    private List<Reunion> reunions = new ArrayList<>();
 
     @Before
     public void setup()
@@ -66,10 +44,12 @@ public class DummyReunionApiServiceTest {
         reunions.clear();
         LIST_REUNIONS.clear();
 
-        reunions.add(new Reunion(mailsPourTests, "test1", "test1", calendarPourTests));
-        reunions.add(new Reunion(mailsPourTests, "test2", "test2", calendarPourTests));
-        reunions.add(new Reunion(mailsPourTests, "test3", "test3", calendarPourTests));
-        reunions.add(new Reunion(mailsPourTests, "test4", "test4", calendarPourTests));
+        roomForTest = new Room("Salle 1", R.drawable.room_1);
+
+        reunions.add(new Reunion(mailsPourTests, roomForTest, "test1", calendarPourTests));
+        reunions.add(new Reunion(mailsPourTests, roomForTest, "test2", calendarPourTests));
+        reunions.add(new Reunion(mailsPourTests, roomForTest, "test3", calendarPourTests));
+        reunions.add(new Reunion(mailsPourTests, roomForTest, "test4", calendarPourTests));
 
         for (int i = 0; i < reunions.size(); i ++)
         {
@@ -91,15 +71,19 @@ public class DummyReunionApiServiceTest {
     public void deleteReunionWithSuccess()
     {
         Reunion reunion = apiService.getReunions().get(0);
+        Room room = reunion.getmRoom();
         apiService.deleteReunion(reunion);
         assertFalse(apiService.getReunions().contains(reunion));
+        assertFalse(room.getmPlanningThisRoom().contains(reunion));
     }
 
     @Test
     public void addReunion()
     {
-        Reunion reunion = new Reunion(mailsPourTests, "test5", "test5", calendarPourTests);
+        Reunion reunion = new Reunion(mailsPourTests, roomForTest, "test5", calendarPourTests);
+        Room room = reunion.getmRoom();
         apiService.addReunion(reunion);
         assertTrue(apiService.getReunions().contains(reunion));
+        assertTrue(room.getmPlanningThisRoom().contains(reunion));
     }
 }

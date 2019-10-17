@@ -1,6 +1,7 @@
 package com.example.mareu.Model;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,9 +14,9 @@ public class Reunion
     private List<String> mEmails;
 
     /**
-     * A list for the Rooms
+     * The ref to for the Rooms
      */
-    private String mRooms;
+    private Room mRoom;
 
     /**
      * To describe the meeting's subject
@@ -27,11 +28,18 @@ public class Reunion
      */
     private Calendar mTime;
 
-    public Reunion(List<String> mEmails, String mRooms, String mSubject, Calendar mTime) {
-        this.mEmails = mEmails;
-        this.mRooms = mRooms;
-        this.mSubject = mSubject;
-        this.mTime = mTime;
+    /**
+     * To put the date
+     */
+    private Date mDate;
+
+    public Reunion () {}
+
+    public Reunion(List<String> aEmails, Room aRoom, String aSubject, Calendar aTime) {
+        this.mEmails = aEmails;
+        this.mRoom = aRoom;
+        this.mSubject = aSubject;
+        this.mTime = aTime;
     }
 
     //////////////////// GETTERS ////////////////////
@@ -40,8 +48,8 @@ public class Reunion
         return mEmails;
     }
 
-    public String getmRooms() {
-        return mRooms;
+    public Room getmRoom() {
+        return mRoom;
     }
 
     public String getmSubject() {
@@ -52,6 +60,9 @@ public class Reunion
         return mTime;
     }
 
+    public Date getmDate() {
+        return mDate;
+    }
 
     //////////////////// SETTERS ////////////////////
 
@@ -59,8 +70,8 @@ public class Reunion
         this.mEmails = mEmails;
     }
 
-    public void setmRooms(String mRooms) {
-        this.mRooms = mRooms;
+    public void setmRoom(Room mRoom) {
+        this.mRoom = mRoom;
     }
 
     public void setmSubject(String mSubject) {
@@ -69,6 +80,10 @@ public class Reunion
 
     public void setmTime(Calendar mTime) {
         this.mTime = mTime;
+    }
+
+    public void setmDate(Date mDate) {
+        this.mDate = mDate;
     }
 
     @Override

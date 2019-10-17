@@ -1,16 +1,24 @@
 package com.example.mareu.Model;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class Room {
 
     private String mName;
     private int mRes;
     private Calendar mCalendar;
+    private List<Reunion> mPlanningThisRoom;
 
     public Room(String mName, int mRes) {
         this.mName = mName;
         this.mRes = mRes;
+
+        if (mPlanningThisRoom == null)
+        {
+            mPlanningThisRoom = new ArrayList<>();
+        }
 
     }
 
@@ -28,6 +36,10 @@ public class Room {
         return mCalendar;
     }
 
+    public List<Reunion> getmPlanningThisRoom() {
+        return mPlanningThisRoom;
+    }
+
     //////////////////// SETTERS ////////////////////
 
     public void setmName(String mName) {
@@ -40,6 +52,10 @@ public class Room {
 
     public void setmCalendar(Calendar mCalendar) {
         this.mCalendar = mCalendar;
+    }
+
+    public void setmPlanningThisRoom(List<Reunion> mPlanningThisRoom) {
+        this.mPlanningThisRoom = mPlanningThisRoom;
     }
 }
 
