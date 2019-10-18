@@ -35,6 +35,8 @@
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textAlignment="center"
             android:id="@+id/arf_room"/>
 
         <TextView
@@ -44,7 +46,7 @@
             android:textSize="@dimen/title_size"/>
 
 
-        <!-- Date -->
+        <!-- Date and Hour -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,30 +54,56 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Date"
-                android:gravity="center"
-                android:textSize="@dimen/text_size"
-                android:id="@+id/arf_date_txt"/>
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Date"
+                    android:gravity="center"
+                    android:textSize="@dimen/text_size"
+                    android:id="@+id/arf_date_txt"/>
 
-            <TextView
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:id="@+id/arf_date"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Heure"
-                android:gravity="center"
-                android:textSize="@dimen/text_size"
-                android:id="@+id/arf_hours_txt"/>
+                android:orientation="vertical">
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Heure"
+                    android:textSize="@dimen/text_size"
+                    android:id="@+id/arf_hours_txt"/>
 
-                android:layout_weight="1"
-                android:id="@+id/arf_date"/>
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:id="@+id/arf_hours_spinner"/>
+
+            </LinearLayout>
+
+
+
+
 
         </LinearLayout>
 

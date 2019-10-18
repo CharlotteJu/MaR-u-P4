@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -58,7 +59,7 @@ public class ReunionListRecyclerViewAdapter extends RecyclerView.Adapter<Reunion
         @BindView(R.id.item_list_mails)
         public TextView mMails;
         @BindView(R.id.item_list_delete_button)
-        public Button mButtonDelete;
+        public ImageButton mButtonDelete;
         @BindView(R.id.item_list_avatar)
         public ImageView mAvatar;
 
