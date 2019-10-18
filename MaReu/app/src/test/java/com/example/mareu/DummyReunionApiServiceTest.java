@@ -5,6 +5,7 @@ import com.example.mareu.Model.Room;
 import com.example.mareu.Services.ReunionApiService;
 
 import com.example.mareu.Model.Reunion;
+import com.example.mareu.Services.RoomsGenerator;
 
 //import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.junit.Before;
@@ -37,22 +38,15 @@ public class DummyReunionApiServiceTest {
     {
         apiService = DI.getNewInstanceApiService();
 
-        mailsPourTests = Arrays.asList("test1@gmail.com", "test2@gmail.com");
-        calendarPourTests = Calendar.getInstance();
-        calendarPourTests.set(2019,10,10,11,33);
-
         reunions.clear();
         LIST_REUNIONS.clear();
 
-        roomForTest = new Room("Salle 1", R.drawable.room_1);
+        roomForTest = RoomsGenerator.getListRooms()[0];
 
-        reunions.add(new Reunion(mailsPourTests, roomForTest, "test1", calendarPourTests));
-        reunions.add(new Reunion(mailsPourTests, roomForTest, "test2", calendarPourTests));
-        reunions.add(new Reunion(mailsPourTests, roomForTest, "test3", calendarPourTests));
-        reunions.add(new Reunion(mailsPourTests, roomForTest, "test4", calendarPourTests));
 
-        for (int i = 0; i < reunions.size(); i ++)
+        for (int i = 0; i < 4; i ++)
         {
+            reunions.add(new Reunion());
             LIST_REUNIONS.add(reunions.get(i));
         }
     }
@@ -74,16 +68,32 @@ public class DummyReunionApiServiceTest {
         Room room = reunion.getmRoom();
         apiService.deleteReunion(reunion);
         assertFalse(apiService.getReunions().contains(reunion));
-        assertFalse(room.getmPlanningThisRoom().contains(reunion));
+        //assertFalse(room.getmPlanningThisRoom().contains(reunion));
     }
 
     @Test
-    public void addReunion()
+    public void addReunionWithSuccess()
     {
-        Reunion reunion = new Reunion(mailsPourTests, roomForTest, "test5", calendarPourTests);
+        Reunion reunion = new Reunion();
         Room room = reunion.getmRoom();
         apiService.addReunion(reunion);
         assertTrue(apiService.getReunions().contains(reunion));
-        assertTrue(room.getmPlanningThisRoom().contains(reunion));
+        //assertTrue(room.getmPlanningThisRoom().contains(reunion));
+    }
+
+    @Test
+    public void generateNameRoomsWithSuccess()
+    {
+        Reunion reunion = new Reunion();
+        reunion.setmRoom(roomForTest);
+        reunion.setmTime("10:00");
+        reunion.setmDate("18/10/2019");
+
+        apiService.addReunion(reunion);
+
+        List<String> listForTest = apiService.generateNameRooms(reunion);
+
+        assertEquals(listForTest.size(), RoomsGenerator.getListRooms().length -1);
+        assertFalse(listForTest.contains(reunion.getmRoom()));
     }
 }

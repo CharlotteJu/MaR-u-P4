@@ -17,6 +17,8 @@ public class DummyReunionApiService implements ReunionApiService {
         {
             this.LIST_REUNIONS = new ArrayList<>();
         }
+
+
     }
 
     @Override
@@ -32,7 +34,7 @@ public class DummyReunionApiService implements ReunionApiService {
         {
             LIST_REUNIONS.remove(reunion);
             Room room = reunion.getmRoom();
-            room.getmPlanningThisRoom().remove(reunion);
+            //room.getmPlanningThisRoom().remove(reunion);
         }
     }
 
@@ -43,7 +45,37 @@ public class DummyReunionApiService implements ReunionApiService {
         {
             LIST_REUNIONS.add(reunion);
             Room room = reunion.getmRoom();
-            room.getmPlanningThisRoom().add(reunion);
+            //room.getmPlanningThisRoom().add(reunion);
         }
     }
+
+    @Override
+    public List<String> generateNameRooms(Reunion reunion) {
+
+        List<String> list = new ArrayList<>();
+
+        for (int i = 0; i < RoomsGenerator.getListRooms().length; i ++)
+        {
+            list.add(RoomsGenerator.getListRooms()[i].getmName());
+        }
+
+        for(int i = 0; i < DummyReunionApiService.LIST_REUNIONS.size(); i ++) {
+
+            if (DummyReunionApiService.LIST_REUNIONS.get(i).getmDate() == reunion.getmDate() && DummyReunionApiService.LIST_REUNIONS.get(i).getmTime() == reunion.getmTime()) {
+
+                String delete = DummyReunionApiService.LIST_REUNIONS.get(i).getmRoom().getmName();
+
+                if (list.contains(delete))
+                {
+                    list.remove(delete);
+                }
+            }
+        }
+
+            return list;
+    }
+
 }
+
+
+

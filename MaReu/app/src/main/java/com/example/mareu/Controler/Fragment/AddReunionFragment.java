@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.example.mareu.Controler.Activity.MainActivity;
 import com.example.mareu.Controler.Ui.MailListRecyclerViewAdapter;
+import com.example.mareu.Controler.Ui.ReunionListRecyclerViewAdapter;
 import com.example.mareu.Model.Reunion;
 import com.example.mareu.Model.Room;
 import com.example.mareu.R;
@@ -72,11 +73,11 @@ public class AddReunionFragment extends Fragment {
     Button mFinalButton;
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
-    private String[] mNameRooms ;
+    private List<String> mNameRooms ;
     private Reunion mReunion;
     private ReunionApiService mApiService;
     private List<String> mMailsList;
-    private RecyclerView.Adapter mAdapter;
+    private MailListRecyclerViewAdapter mAdapter;
 
     public AddReunionFragment() {
         // Required empty public constructor
@@ -93,7 +94,6 @@ public class AddReunionFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mApiService = new DummyReunionApiService();
         mReunion = new Reunion();
-        mNameRooms = generateNameRooms();
         mMailsList = new ArrayList<>();
         mAdapter = new MailListRecyclerViewAdapter(mMailsList);
     }
@@ -108,27 +108,6 @@ public class AddReunionFragment extends Fragment {
         configureRecyclerView();
 
         mReunion.setmSubject(String.valueOf(mSubjectEdit.getText()));
-
-        mRoomSpinner.setAdapter(configSpinnerRooms());
-        mRoomSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                String nameRoom = adapterView.getItemAtPosition(position).toString();
-                Room room;
-                for (int i = 0;  i < RoomsGenerator.getListRooms().length; i ++)
-                {
-                    if (nameRoom == RoomsGenerator.getListRooms()[i].getmName())
-                    {
-                        room = RoomsGenerator.getListRooms()[i];
-                        mReunion.setmRoom(room);
-                        break;
-                    }
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
-        });
 
         mDateSetListener = generateDatePickerDialog();
         mDateButton.setOnClickListener(new View.OnClickListener() {
@@ -154,11 +133,15 @@ public class AddReunionFragment extends Fragment {
                }
                mReunion.setmTime(stringHour);
                mHourTxt.setText(stringHour);
+               updateSpinner();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
+
+        updateSpinner();
+
 
         mAddMailsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,7 +149,7 @@ public class AddReunionFragment extends Fragment {
                 String mail = String.valueOf(mMailEditText.getText());
                 mMailsList.add(mail);
                 mReunion.setmEmails(mMailsList);
-                initListMails();
+                initListMails(mMailsList);
                 Log.d("DEBUG_APP", "TAILLE LISTE = " +mMailsList.size());
                 Log.d("DEBUG_APP", "DERNIER DE LA LISTE = " + mMailsList.get(mMailsList.size()-1));
             }
@@ -218,27 +201,38 @@ public class AddReunionFragment extends Fragment {
      */
     private ArrayAdapter<String> configSpinnerRooms ()
     {
+        mNameRooms = mApiService.generateNameRooms(mReunion);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, mNameRooms);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         return adapter;
     }
 
-    /**
-     * Method to take the name of Rooms
-     * This tab be used for the spinner
-     * @return
-     */
-    private String[] generateNameRooms ()
+    private void updateSpinner()
     {
-        String[] tab = new String[RoomsGenerator.getListRooms().length];
+        mRoomSpinner.setEnabled(mReunion.getmDate() != null && mReunion.getmTime() != null);
 
-        for (int i = 0; i < RoomsGenerator.getListRooms().length; i ++)
-        {
-            tab[i] = RoomsGenerator.getListRooms()[i].getmName();
-        }
-        return tab;
+        mRoomSpinner.setAdapter(configSpinnerRooms());
+        mRoomSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                String nameRoom = adapterView.getItemAtPosition(position).toString();
+                Room room;
+                for (int i = 0;  i < RoomsGenerator.getListRooms().length; i ++)
+                {
+                    if (nameRoom == RoomsGenerator.getListRooms()[i].getmName())
+                    {
+                        room = RoomsGenerator.getListRooms()[i];
+                        mReunion.setmRoom(room);
+                        break;
+                    }
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+        });
     }
+
 
     /////////////DATE//////////////////
 
@@ -261,6 +255,7 @@ public class AddReunionFragment extends Fragment {
 
                 mReunion.setmDate(dayString + "/" + monthString + "/" + year);
                 mDateTxt.setText(dayString + "/" + monthString + "/" + year);
+                updateSpinner();
             }
         };
         return dateSetListener;
@@ -285,8 +280,10 @@ public class AddReunionFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
-    private void initListMails ()
+    private void initListMails (List<String> listMails)
     {
+        this.mAdapter = new MailListRecyclerViewAdapter(listMails);
+        mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
     }
 

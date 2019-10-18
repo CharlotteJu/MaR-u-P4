@@ -3,4 +3,6 @@
     <dimen name="title_size">20dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="text_size">16dp</dimen>
+    <dimen name="spinner_room_size">40sp</dimen>
+    <dimen name="recycler_view_mails">150sp</dimen>
 </resources>

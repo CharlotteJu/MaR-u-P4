@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Controler.Fragment.AddReunionFragment"
@@ -9,7 +11,7 @@
     <LinearLayout
 
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/add_reunion_fragment"
         android:orientation="vertical"
         android:layout_margin="@dimen/text_margin">
@@ -22,29 +24,6 @@
             android:hint="Sujet de la réunion"
             android:layout_margin="@dimen/text_margin"
             android:id="@+id/arf_subject_edit_text"/>
-
-
-        <!-- Room -->
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Salle"
-            android:textSize="@dimen/title_size" />
-
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:id="@+id/arf_room"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Date et heure"
-            android:textSize="@dimen/title_size"/>
-
 
         <!-- Date and Hour -->
         <LinearLayout
@@ -65,7 +44,7 @@
                     android:layout_weight="1"
                     android:text="Date"
                     android:gravity="center"
-                    android:textSize="@dimen/text_size"
+                    android:textSize="@dimen/title_size"
                     android:id="@+id/arf_date_txt"/>
 
                 <Button
@@ -88,7 +67,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="Heure"
-                    android:textSize="@dimen/text_size"
+                    android:textSize="@dimen/title_size"
                     android:id="@+id/arf_hours_txt"/>
 
                 <Spinner
@@ -102,10 +81,23 @@
             </LinearLayout>
 
 
-
-
-
         </LinearLayout>
+
+        <!-- Room -->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Salle"
+            android:textSize="@dimen/title_size" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spinner_room_size"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:id="@+id/arf_room"/>
+
 
 
         <!-- Mails -->
@@ -136,24 +128,28 @@
 
         </LinearLayout>
 
-        <!-- List of mails -->
+        <!-- List of mails-->
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="@dimen/recycler_view_mails"
+            android:orientation="horizontal"
+            android:fillViewport="true">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/text_margin"
+                android:layout_marginRight="@dimen/text_margin"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                tools:listitem="@layout/fragment_one_mail"
                 android:id="@+id/arf_liste_mails"/>
 
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
 
 
-        <!-- Final Button -->
+                <!-- Final Button -->
 
         <Button
             android:layout_width="match_parent"

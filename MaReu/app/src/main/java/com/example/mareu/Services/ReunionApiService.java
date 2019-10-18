@@ -29,7 +29,12 @@ public interface ReunionApiService
      */
     void addReunion(Reunion reunion);
 
-
+    /**
+     * Give a list of String for the rooms
+     * @param reunion
+     * @return
+     */
+    List<String> generateNameRooms(Reunion reunion);
 
 
 }
