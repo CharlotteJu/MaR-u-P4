@@ -3,12 +3,12 @@ package com.example.mareu.Model;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 public class Room {
 
     private String mName;
     private int mRes;
-    private Calendar mCalendar;
     private List<Reunion> mPlanningThisRoom;
 
     public Room(String mName, int mRes) {
@@ -32,10 +32,6 @@ public class Room {
         return mRes;
     }
 
-    public Calendar getmCalendar() {
-        return mCalendar;
-    }
-
     public List<Reunion> getmPlanningThisRoom() {
         return mPlanningThisRoom;
     }
@@ -50,12 +46,17 @@ public class Room {
         this.mRes = mRes;
     }
 
-    public void setmCalendar(Calendar mCalendar) {
-        this.mCalendar = mCalendar;
-    }
-
     public void setmPlanningThisRoom(List<Reunion> mPlanningThisRoom) {
         this.mPlanningThisRoom = mPlanningThisRoom;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Room room = (Room) o;
+        return Objects.equals(getmName(), room.getmName());
+        //return Objects.equals(hashCode(), room.hashCode());
     }
 }
 

@@ -1,5 +1,7 @@
 package com.example.mareu.Controler.Ui;
 
+import android.content.res.Resources;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mareu.Controler.Fragment.ListReunionsFragment;
 import com.example.mareu.Model.Reunion;
 import com.example.mareu.R;
 
@@ -24,35 +27,45 @@ import butterknife.ButterKnife;
 public class ReunionListRecyclerViewAdapter extends RecyclerView.Adapter<ReunionListRecyclerViewAdapter.ViewHolder>
 {
 
-    private List<Reunion> mReunions;
+    //interface to get the click on the item
+    public interface clickToDeleteInterface
+    {
+        void clickToDelete(int position);
+    }
 
-    public ReunionListRecyclerViewAdapter(List<Reunion> mReunions) {
-        this.mReunions = mReunions;
+    private List<Reunion> mReunions;
+    private int mDimenSize;
+    private clickToDeleteInterface mClickToDeleteInterface;
+    private ListReunionsFragment fr;
+
+    public ReunionListRecyclerViewAdapter(List<Reunion> mReunions, int dimenSize, clickToDeleteInterface clickToDeleteInterface, ListReunionsFragment fragment) {
+        this.mDimenSize = dimenSize;
+        this.mClickToDeleteInterface = clickToDeleteInterface;
+        fr = fragment;
+        mReunions = fr.mReunions;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).
                 inflate(R.layout.fragment_one_reunion, parent, false);
-        return new ViewHolder(v);
+        return new ViewHolder(v, mClickToDeleteInterface);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position)
     {
-        Reunion reunion = mReunions.get(position);
+        Reunion reunion = fr.mReunions.get(position);//mReunions.get(position);
         holder.updateInfos(reunion);
     }
 
-
-
     @Override
     public int getItemCount() {
-        return mReunions.size();
+        return fr.mReunions.size();
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         @BindView(R.id.item_list_name)
         public TextView mName;
@@ -63,11 +76,20 @@ public class ReunionListRecyclerViewAdapter extends RecyclerView.Adapter<Reunion
         @BindView(R.id.item_list_avatar)
         public ImageView mAvatar;
 
+        private clickToDeleteInterface mClickToDeleteInterface;
 
 
-        public ViewHolder(@NonNull View itemView) {
+
+        public ViewHolder(@NonNull View itemView, clickToDeleteInterface clickToDeleteInterface) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            this.mClickToDeleteInterface = clickToDeleteInterface;
+            mButtonDelete.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            mClickToDeleteInterface.clickToDelete(getAdapterPosition());
         }
 
         /**
@@ -76,7 +98,20 @@ public class ReunionListRecyclerViewAdapter extends RecyclerView.Adapter<Reunion
          */
         public void updateInfos (Reunion reunion)
         {
-            mName.setText(reunion.getmRoom() + " - " + reunion.getmTime() + " - " + reunion.getmSubject());
+            String title = reunion.getmSubject() + " - " + (reunion.getmDate()).substring(0,5) +" - " + reunion.getmTime() + " - " + reunion.getmRoom().getmName();
+
+            Log.d("DEBUG_APP", "Longueur titre : " + title.length());
+
+            if(title.length() > mDimenSize)
+            {
+                title.substring(0,mDimenSize);
+                title+="...";
+
+                Log.d("DEBUG_APP", "Longueur titre après if : " + title.length());
+            }
+
+            mName.setText(title);
+            mAvatar.setImageResource(reunion.getmRoom().getmRes());
 
             // Cast the list in String
             String mails = "";
@@ -85,7 +120,15 @@ public class ReunionListRecyclerViewAdapter extends RecyclerView.Adapter<Reunion
                 mails += reunion.getmEmails().get(i) + ", ";
             }
 
+            if(mails.length() > mDimenSize)
+            {
+                mails.substring(0,mDimenSize);
+                mails+="...";
+            }
+
             mMails.setText(mails);
         }
+
+
     }
 }

@@ -27,11 +27,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/activity_main_container"
-        android:layout_alignParentRight="true"
-
-
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:srcCompat="@drawable/ic_add_white_24dp"
+        android:backgroundTint="#E91C1C"
+        android:layout_alignParentRight="true"
+        />
 
 
     <FrameLayout
@@ -40,6 +40,8 @@
         android:layout_alignParentBottom="true"
         android:layout_below="@id/appBarToolbar"
         tools:listitem="@layout/fragment_list_reunions"
-        android:id="@+id/activity_main_container"/>
+        android:id="@+id/activity_main_container">
+
+    </FrameLayout>
 
     </RelativeLayout>

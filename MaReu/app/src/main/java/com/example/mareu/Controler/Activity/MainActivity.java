@@ -1,27 +1,35 @@
 package com.example.mareu.Controler.Activity;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.mareu.Controler.Fragment.AddReunionFragment;
 import com.example.mareu.Controler.Fragment.ListReunionsFragment;
+import com.example.mareu.Model.Room;
 import com.example.mareu.R;
+import com.example.mareu.Services.DummyReunionApiService;
+import com.example.mareu.Services.ReunionApiService;
+import com.example.mareu.Services.RoomsGenerator;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-
-import androidx.recyclerview.widget.RecyclerView;
 
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
+import android.widget.Spinner;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,27 +37,36 @@ public class MainActivity extends AppCompatActivity {
     private ListReunionsFragment mListReunionsFragments;
     private AddReunionFragment mAddReunionFragment;
     private FloatingActionButton fab;
+    private Toolbar toolbar;
+    private ReunionApiService mApiService;
+    private String mDate;
+    private Room mRoom;
+
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
 
 
    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mApiService = new DummyReunionApiService();
+
         configureMainFragment();
         configureDetailsFragment();
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        configureToolbar();
+
+        mDateSetListener = generateDatePickerDialog();
 
         if (findViewById(R.id.add_reunion_fragment) == null)
         {
-           configureFaButton();
+           configureFabButton();
         }
     }
 
     public void configureMainFragment()
     {
         mListReunionsFragments = (ListReunionsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_list_reunions);
-
         if (mListReunionsFragments == null)
         {
             mListReunionsFragments = new ListReunionsFragment();
@@ -68,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void configureFaButton()
+    private void configureFabButton()
     {
         fab = findViewById(R.id.fab);
 
@@ -85,25 +102,131 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void configureToolbar()
+    {
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id)
+        {
+            case R.id.no_filter :
+                mListReunionsFragments.mReunions = mApiService.getReunions();
+                mListReunionsFragments.dataChanged();
+                return true;
+
+            case R.id.filter_date :
+
+                mDateSetListener = generateDatePickerDialog();
+                configureDialogCalendar();
+                return true;
+
+            case R.id.filter_room :
+
+                configureSpinnerRoom();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
 
-        return super.onOptionsItemSelected(item);
+    }
+
+    private void configureDialogCalendar() {
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog dialogDate = new DatePickerDialog( this, mDateSetListener,
+              year, month, day);
+        dialogDate.getDatePicker().setMinDate(System.currentTimeMillis());
+        dialogDate.show();
+
+
+    }
+
+    private DatePickerDialog.OnDateSetListener generateDatePickerDialog()
+    {
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                String dayString = String.valueOf(day);
+                String monthString = String.valueOf(month+1);
+
+                if(day < 10)
+                {
+                    dayString = "0" + String.valueOf(day);
+                }
+                if (month+1 < 10)
+                {
+                    monthString = "0" + String.valueOf(month+1);
+                }
+
+                mDate = dayString + "/" + monthString + "/" + year;
+                mListReunionsFragments.mReunions = mApiService.filterDate(mDate);
+                mListReunionsFragments.dataChanged();
+            }
+        };
+
+        return dateSetListener;
+    }
+
+    private void configureSpinnerRoom()
+    {
+        AlertDialog.Builder mPopUp = new AlertDialog.Builder(this);
+
+        View v = LayoutInflater.from(this).inflate(R.layout.dialog_spinner, null);
+        Spinner spinner = v.findViewById(R.id.dsf_spinner);
+
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < RoomsGenerator.getListRooms().length; i ++)
+        {
+            list.add(RoomsGenerator.getListRooms()[i].getmName());
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l)
+            {
+                String nameRoom = adapterView.getItemAtPosition(position).toString();
+                for (int i = 0;  i < RoomsGenerator.getListRooms().length; i ++)
+                {
+                    if (nameRoom == RoomsGenerator.getListRooms()[i].getmName())
+                    {
+                        mRoom = RoomsGenerator.getListRooms()[i];
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+        });
+
+        mPopUp.setTitle("Sélectionnez une valeur")
+                .setView(v)
+                .setPositiveButton("Filtrer",
+                        (dialog, which) -> {
+                            mListReunionsFragments.mReunions = mApiService.filterRoom(mRoom);
+                            mListReunionsFragments.dataChanged();
+                        })
+                .setNegativeButton("Annuler",
+                        (dialog, which) -> {});
+        mPopUp.create().show();
     }
 }

@@ -28,27 +28,26 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ListReunionsFragment extends Fragment
+public class ListReunionsFragment extends Fragment implements ReunionListRecyclerViewAdapter.clickToDeleteInterface
 {
     private RecyclerView mRecyclerView;
-    private List<Reunion> mReunions;
+    public List<Reunion> mReunions;
     private ReunionApiService mApiService;
+    RecyclerView.Adapter adapter;
+    private int dimenSize;
+
 
     public ListReunionsFragment() {
         // Required empty public constructor
     }
 
 
-    public static ListReunionsFragment newInstance()
-    {
-        ListReunionsFragment fragment = new ListReunionsFragment();
-        return fragment;
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mApiService = DI.getNeighbourApiService();
+        dimenSize = getResources().getInteger(R.integer.title_list_reunions_size);
     }
 
     @Override
@@ -70,8 +69,22 @@ public class ListReunionsFragment extends Fragment
     private void initList()
     {
         mReunions = mApiService.getReunions();
-        mRecyclerView.setAdapter(new ReunionListRecyclerViewAdapter(mReunions));
+        adapter = new ReunionListRecyclerViewAdapter(mReunions, dimenSize, this::clickToDelete, this);
+        mRecyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void clickToDelete(int position)
+    {
+        Reunion reunion = mReunions.get(position);
+        mApiService.deleteReunion(reunion);
+        initList();
+    }
+
+    public void dataChanged()
+    {
+        adapter.notifyDataSetChanged();
+    }
 }
 

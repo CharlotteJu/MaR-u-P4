@@ -3,6 +3,7 @@ package com.example.mareu.Controler.Ui;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,17 +19,23 @@ import butterknife.ButterKnife;
 public class MailListRecyclerViewAdapter extends RecyclerView.Adapter<MailListRecyclerViewAdapter.ViewHolder>
 {
 
-    private List<String> mMails;
+    public interface MailsToDelete{
+        void clickToDelete(int position);
+    }
 
-    public MailListRecyclerViewAdapter(List<String> mMails) {
+    private List<String> mMails;
+    private MailsToDelete mMailsToDelete;
+
+    public MailListRecyclerViewAdapter(List<String> mMails, MailsToDelete mailsToDelete) {
         this.mMails = mMails;
+        this.mMailsToDelete = mailsToDelete;
     }
 
     @Override
     public MailListRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).
                 inflate(R.layout.fragment_one_mail, parent, false);
-        return new MailListRecyclerViewAdapter.ViewHolder(v);
+        return new MailListRecyclerViewAdapter.ViewHolder(v, mMailsToDelete);
     }
 
     @Override
@@ -44,14 +51,26 @@ public class MailListRecyclerViewAdapter extends RecyclerView.Adapter<MailListRe
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         @BindView(R.id.fom_mail)
         public TextView mMail;
+        @BindView(R.id.fom_delete_button)
+        public ImageButton mDeleteButton;
 
-        public ViewHolder(@NonNull View itemView) {
+        private MailsToDelete mMailsToDelete;
+
+        public ViewHolder(@NonNull View itemView, MailsToDelete mailsToDelete) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            this.mMailsToDelete = mailsToDelete;
+            mDeleteButton.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            mMailsToDelete.clickToDelete(getAdapterPosition());
+
         }
 
         /**
@@ -61,5 +80,7 @@ public class MailListRecyclerViewAdapter extends RecyclerView.Adapter<MailListRe
         {
             mMail.setText(mail);
         }
+
+
     }
 }

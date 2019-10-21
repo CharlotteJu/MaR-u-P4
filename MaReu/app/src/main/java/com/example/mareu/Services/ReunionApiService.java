@@ -1,6 +1,7 @@
 package com.example.mareu.Services;
 
 import com.example.mareu.Model.Reunion;
+import com.example.mareu.Model.Room;
 
 import java.util.List;
 
@@ -36,5 +37,7 @@ public interface ReunionApiService
      */
     List<String> generateNameRooms(Reunion reunion);
 
+    List<Reunion> filterDate(String date);
 
+    List<Reunion> filterRoom(Room room);
 }

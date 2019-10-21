@@ -49,7 +49,7 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AddReunionFragment extends Fragment {
+public class AddReunionFragment extends Fragment implements MailListRecyclerViewAdapter.MailsToDelete {
 
     @BindView(R.id.arf_subject_edit_text)
     EditText mSubjectEdit;
@@ -95,7 +95,7 @@ public class AddReunionFragment extends Fragment {
         mApiService = new DummyReunionApiService();
         mReunion = new Reunion();
         mMailsList = new ArrayList<>();
-        mAdapter = new MailListRecyclerViewAdapter(mMailsList);
+        mAdapter = new MailListRecyclerViewAdapter(mMailsList, this::clickToDelete);
     }
 
     @Override
@@ -150,8 +150,7 @@ public class AddReunionFragment extends Fragment {
                 mMailsList.add(mail);
                 mReunion.setmEmails(mMailsList);
                 initListMails(mMailsList);
-                Log.d("DEBUG_APP", "TAILLE LISTE = " +mMailsList.size());
-                Log.d("DEBUG_APP", "DERNIER DE LA LISTE = " + mMailsList.get(mMailsList.size()-1));
+                mMailEditText.setText("");
             }
         });
 
@@ -164,6 +163,7 @@ public class AddReunionFragment extends Fragment {
                     mApiService.addReunion(mReunion);
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);
+                    mReunion.setmSubject(String.valueOf(mSubjectEdit.getText()));
                 }
                 else
                 {
@@ -282,15 +282,18 @@ public class AddReunionFragment extends Fragment {
     }
     private void initListMails (List<String> listMails)
     {
-        this.mAdapter = new MailListRecyclerViewAdapter(listMails);
+        this.mAdapter = new MailListRecyclerViewAdapter(listMails,this::clickToDelete);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
     }
 
-
-
-    public interface CreateReunionListener{
-        void onCreateReunion(Reunion reunion);
+    @Override
+    public void clickToDelete(int position) {
+        String mail = mMailsList.get(position);
+        mMailsList.remove(mail);
+        initListMails(mMailsList);
     }
+
+
 
 }

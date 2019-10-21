@@ -1,6 +1,8 @@
 
 package com.example.mareu.Services;
 
+import android.util.Log;
+
 import com.example.mareu.Model.Reunion;
 import com.example.mareu.Model.Room;
 
@@ -34,7 +36,7 @@ public class DummyReunionApiService implements ReunionApiService {
         {
             LIST_REUNIONS.remove(reunion);
             Room room = reunion.getmRoom();
-            //room.getmPlanningThisRoom().remove(reunion);
+            room.getmPlanningThisRoom().remove(reunion);
         }
     }
 
@@ -45,7 +47,7 @@ public class DummyReunionApiService implements ReunionApiService {
         {
             LIST_REUNIONS.add(reunion);
             Room room = reunion.getmRoom();
-            //room.getmPlanningThisRoom().add(reunion);
+            room.getmPlanningThisRoom().add(reunion);
         }
     }
 
@@ -75,6 +77,38 @@ public class DummyReunionApiService implements ReunionApiService {
             return list;
     }
 
+    @Override
+    public List<Reunion> filterDate(String date) {
+
+        List<Reunion> list = new ArrayList<>();
+
+        for (int i = 0; i < DummyReunionApiService.LIST_REUNIONS.size(); i ++)
+        {
+            if ((DummyReunionApiService.LIST_REUNIONS.get(i).getmDate()).equals(date))
+            {
+                list.add(DummyReunionApiService.LIST_REUNIONS.get(i));
+            }
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Reunion> filterRoom(Room room) {
+        List<Reunion> list = new ArrayList<>();
+
+        for (int i = 0; i < DummyReunionApiService.LIST_REUNIONS.size(); i ++)
+        {
+            if (DummyReunionApiService.LIST_REUNIONS.get(i).getmRoom().getmName().equals(room.getmName()))
+            {
+                list.add(DummyReunionApiService.LIST_REUNIONS.get(i));
+            }
+        }
+
+        //List<Reunion> liste = room.getmPlanningThisRoom();
+
+        return list;
+    }
 }
 
 

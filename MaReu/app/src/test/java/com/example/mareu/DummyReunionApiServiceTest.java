@@ -46,8 +46,11 @@ public class DummyReunionApiServiceTest {
 
         for (int i = 0; i < 4; i ++)
         {
-            reunions.add(new Reunion());
-            LIST_REUNIONS.add(reunions.get(i));
+            Reunion r= new Reunion();
+            r.setmRoom(roomForTest);
+            r.setmDate("15/12/2019");
+            reunions.add(r);
+            LIST_REUNIONS.add(r);
         }
     }
 
@@ -68,17 +71,18 @@ public class DummyReunionApiServiceTest {
         Room room = reunion.getmRoom();
         apiService.deleteReunion(reunion);
         assertFalse(apiService.getReunions().contains(reunion));
-        //assertFalse(room.getmPlanningThisRoom().contains(reunion));
+        assertFalse(room.getmPlanningThisRoom().contains(reunion));
     }
 
     @Test
     public void addReunionWithSuccess()
     {
         Reunion reunion = new Reunion();
+        reunion.setmRoom(roomForTest);
         Room room = reunion.getmRoom();
         apiService.addReunion(reunion);
         assertTrue(apiService.getReunions().contains(reunion));
-        //assertTrue(room.getmPlanningThisRoom().contains(reunion));
+        assertTrue(room.getmPlanningThisRoom().contains(reunion));
     }
 
     @Test
@@ -96,4 +100,39 @@ public class DummyReunionApiServiceTest {
         assertEquals(listForTest.size(), RoomsGenerator.getListRooms().length -1);
         assertFalse(listForTest.contains(reunion.getmRoom()));
     }
+
+    @Test
+    public void filterDateWithSuccess()
+    {
+        String date = "01/01/2020";
+        Reunion reunion = new Reunion();
+        reunion.setmDate(date);
+        reunion.setmRoom(roomForTest);
+
+        apiService.addReunion(reunion);
+
+        List<Reunion> compare = apiService.filterDate(date);
+        assertEquals(compare.size(), 1);
+
+
+    }
+
+    @Test
+    public void filterRoomWithSuccess()
+    {
+        Room roomAd = new Room("RoomX", 0);
+
+        Reunion reunion = new Reunion();
+        reunion.setmRoom(roomAd);
+
+        apiService.addReunion(reunion);
+
+        assertEquals(apiService.getReunions().size(),5);
+
+        List<Reunion> compare = apiService.filterRoom(roomAd);
+        assertTrue(compare.contains(reunion));
+        assertEquals(compare.size(), 1);
+    }
+
+
 }
