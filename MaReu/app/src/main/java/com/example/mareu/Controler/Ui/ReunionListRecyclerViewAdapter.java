@@ -100,14 +100,10 @@ public class ReunionListRecyclerViewAdapter extends RecyclerView.Adapter<Reunion
         {
             String title = reunion.getmSubject() + " - " + (reunion.getmDate()).substring(0,5) +" - " + reunion.getmTime() + " - " + reunion.getmRoom().getmName();
 
-            Log.d("DEBUG_APP", "Longueur titre : " + title.length());
-
             if(title.length() > mDimenSize)
             {
-                title.substring(0,mDimenSize);
+                title = title.substring(0,mDimenSize);
                 title+="...";
-
-                Log.d("DEBUG_APP", "Longueur titre après if : " + title.length());
             }
 
             mName.setText(title);
@@ -122,7 +118,7 @@ public class ReunionListRecyclerViewAdapter extends RecyclerView.Adapter<Reunion
 
             if(mails.length() > mDimenSize)
             {
-                mails.substring(0,mDimenSize);
+                mails = mails.substring(0,(mDimenSize*2)-10);
                 mails+="...";
             }
 

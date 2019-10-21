@@ -33,7 +33,7 @@ public class ListReunionsFragment extends Fragment implements ReunionListRecycle
     private RecyclerView mRecyclerView;
     public List<Reunion> mReunions;
     private ReunionApiService mApiService;
-    RecyclerView.Adapter adapter;
+    private RecyclerView.Adapter adapter;
     private int dimenSize;
 
 
