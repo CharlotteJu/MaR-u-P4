@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
 
 public class MailListRecyclerViewAdapter extends RecyclerView.Adapter<MailListRecyclerViewAdapter.ViewHolder>
 {
-
+    // Interface to remove an item
     public interface MailsToDelete{
         void clickToDelete(int position);
     }
@@ -70,7 +70,6 @@ public class MailListRecyclerViewAdapter extends RecyclerView.Adapter<MailListRe
         @Override
         public void onClick(View view) {
             mMailsToDelete.clickToDelete(getAdapterPosition());
-
         }
 
         /**

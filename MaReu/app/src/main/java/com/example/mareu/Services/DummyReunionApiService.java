@@ -19,8 +19,6 @@ public class DummyReunionApiService implements ReunionApiService {
         {
             this.LIST_REUNIONS = new ArrayList<>();
         }
-
-
     }
 
     @Override
@@ -74,7 +72,7 @@ public class DummyReunionApiService implements ReunionApiService {
             }
         }
 
-            return list;
+        return list;
     }
 
     @Override

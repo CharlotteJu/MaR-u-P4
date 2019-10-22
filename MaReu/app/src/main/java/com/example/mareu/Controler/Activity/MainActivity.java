@@ -39,9 +39,10 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private Toolbar toolbar;
     private ReunionApiService mApiService;
+
+    // For the filters
     private String mDate;
     private Room mRoom;
-
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
 
@@ -62,50 +63,6 @@ public class MainActivity extends AppCompatActivity {
         {
            configureFabButton();
         }
-    }
-
-    public void configureMainFragment()
-    {
-        mListReunionsFragments = (ListReunionsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_list_reunions);
-        if (mListReunionsFragments == null)
-        {
-            mListReunionsFragments = new ListReunionsFragment();
-            getSupportFragmentManager().beginTransaction().add(R.id.activity_main_container, mListReunionsFragments).commit();
-        }
-    }
-
-    private void configureDetailsFragment()
-    {
-        mAddReunionFragment = (AddReunionFragment) getSupportFragmentManager().findFragmentById(R.id.add_reunion_fragment);
-
-        if(mAddReunionFragment == null && findViewById(R.id.activity_details_container) != null)
-        {
-            mAddReunionFragment = new AddReunionFragment();
-            getSupportFragmentManager().beginTransaction().add(R.id.activity_details_container, mAddReunionFragment).commit();
-        }
-    }
-
-    private void configureFabButton()
-    {
-        fab = findViewById(R.id.fab);
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if(mAddReunionFragment == null)
-                {
-                    Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
-    }
-
-    private void configureToolbar()
-    {
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
     }
 
     @Override
@@ -139,9 +96,78 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
 
+
+    /////////////////CONFIGURE////////////////
+
+    /**
+     * Display ListReunionsFragment
+     */
+    public void configureMainFragment()
+    {
+        mListReunionsFragments = (ListReunionsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_list_reunions);
+        if (mListReunionsFragments == null)
+        {
+            mListReunionsFragments = new ListReunionsFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.activity_main_container, mListReunionsFragments).commit();
+        }
+    }
+
+
+    /**
+     * Display AddReunionFragment - Landscape
+     */
+    private void configureDetailsFragment()
+    {
+        mAddReunionFragment = (AddReunionFragment) getSupportFragmentManager().findFragmentById(R.id.add_reunion_fragment);
+
+        if(mAddReunionFragment == null && findViewById(R.id.activity_details_container) != null)
+        {
+            mAddReunionFragment = new AddReunionFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.activity_details_container, mAddReunionFragment).commit();
+        }
+    }
+
+
+    /**
+     * Configure the button to switch activity
+     */
+    private void configureFabButton()
+    {
+        fab = findViewById(R.id.fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(mAddReunionFragment == null)
+                {
+                    Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+    }
+
+
+    /**
+     * Configure the toolbar
+     */
+    private void configureToolbar()
+    {
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+    }
+
+
+
+
+    /////////////////FILTERS////////////////
+
+    /**
+     * Display a calendar
+     */
     private void configureDialogCalendar() {
         Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);
@@ -149,13 +175,16 @@ public class MainActivity extends AppCompatActivity {
         int day = cal.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog dialogDate = new DatePickerDialog( this, mDateSetListener,
-              year, month, day);
+                year, month, day);
         dialogDate.getDatePicker().setMinDate(System.currentTimeMillis());
         dialogDate.show();
-
-
     }
 
+
+    /**
+     * Give an DatePickerDialog for the filter Date
+     * @return DatePickerDialog.OnDateSetListener
+     */
     private DatePickerDialog.OnDateSetListener generateDatePickerDialog()
     {
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -178,10 +207,12 @@ public class MainActivity extends AppCompatActivity {
                 mListReunionsFragments.dataChanged();
             }
         };
-
         return dateSetListener;
     }
 
+    /**
+     * Configure the Spinner to display an AlertBuilder of Rooms
+     */
     private void configureSpinnerRoom()
     {
         AlertDialog.Builder mPopUp = new AlertDialog.Builder(this);

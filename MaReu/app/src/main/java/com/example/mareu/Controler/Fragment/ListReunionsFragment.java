@@ -34,14 +34,11 @@ public class ListReunionsFragment extends Fragment implements ReunionListRecycle
     public List<Reunion> mReunions;
     private ReunionApiService mApiService;
     private RecyclerView.Adapter adapter;
-    private int dimenSize;
-
+    private int dimenSize; // Relative size for the text
 
     public ListReunionsFragment() {
         // Required empty public constructor
     }
-
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,6 +71,10 @@ public class ListReunionsFragment extends Fragment implements ReunionListRecycle
         adapter.notifyDataSetChanged();
     }
 
+    /**
+     * Interface method to remove a reunion
+     * @param position
+     */
     @Override
     public void clickToDelete(int position)
     {
@@ -82,6 +83,9 @@ public class ListReunionsFragment extends Fragment implements ReunionListRecycle
         initList();
     }
 
+    /**
+     * Method to notify that the Data changed
+     */
     public void dataChanged()
     {
         adapter.notifyDataSetChanged();

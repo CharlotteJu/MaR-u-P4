@@ -2,19 +2,14 @@ package com.example.mareu.Controler.Fragment;
 
 
 import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,15 +18,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.mareu.Controler.Activity.MainActivity;
 import com.example.mareu.Controler.Ui.MailListRecyclerViewAdapter;
-import com.example.mareu.Controler.Ui.ReunionListRecyclerViewAdapter;
 import com.example.mareu.Model.Reunion;
 import com.example.mareu.Model.Room;
 import com.example.mareu.R;
@@ -51,26 +43,16 @@ import butterknife.ButterKnife;
  */
 public class AddReunionFragment extends Fragment implements MailListRecyclerViewAdapter.MailsToDelete {
 
-    @BindView(R.id.arf_subject_edit_text)
-    EditText mSubjectEdit;
-    @BindView(R.id.arf_room)
-    Spinner mRoomSpinner;
-    @BindView(R.id.arf_date)
-    Button mDateButton;
-    @BindView(R.id.arf_date_txt)
-    TextView mDateTxt;
-    @BindView(R.id.arf_hours_spinner)
-    Spinner mHourSpinner;
-    @BindView(R.id.arf_hours_txt)
-    TextView mHourTxt;
-    @BindView(R.id.arf_add_mails_button)
-    Button mAddMailsButton;
-    @BindView(R.id.arf_mail)
-    EditText mMailEditText;
-    @BindView(R.id.arf_liste_mails)
-    RecyclerView mRecyclerView;
-    @BindView(R.id.arf_final_button)
-    Button mFinalButton;
+    @BindView(R.id.arf_subject_edit_text) EditText mSubjectEdit;
+    @BindView(R.id.arf_room) Spinner mRoomSpinner;
+    @BindView(R.id.arf_date) Button mDateButton;
+    @BindView(R.id.arf_date_txt) TextView mDateTxt;
+    @BindView(R.id.arf_hours_spinner) Spinner mHourSpinner;
+    @BindView(R.id.arf_hours_txt) TextView mHourTxt;
+    @BindView(R.id.arf_add_mails_button) Button mAddMailsButton;
+    @BindView(R.id.arf_mail) EditText mMailEditText;
+    @BindView(R.id.arf_liste_mails) RecyclerView mRecyclerView;
+    @BindView(R.id.arf_final_button) Button mFinalButton;
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private List<String> mNameRooms ;
@@ -81,12 +63,6 @@ public class AddReunionFragment extends Fragment implements MailListRecyclerView
 
     public AddReunionFragment() {
         // Required empty public constructor
-    }
-
-    public AddReunionFragment newInstance()
-    {
-        AddReunionFragment fragment = new AddReunionFragment();
-        return fragment;
     }
 
     @Override
@@ -117,31 +93,7 @@ public class AddReunionFragment extends Fragment implements MailListRecyclerView
             }
         });
 
-        mHourSpinner.setAdapter(configSpinner(R.array.hour_spinner));
-        mHourSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-               int intHour = Integer.parseInt(adapterView.getItemAtPosition(position).toString());
-               String stringHour;
-               if(intHour < 10)
-               {
-                   stringHour = "0"+intHour+":00";
-               }
-               else
-               {
-                   stringHour = intHour+":00";
-               }
-               mReunion.setmTime(stringHour);
-               mHourTxt.setText(stringHour);
-               updateSpinner();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
-        });
-
-        updateSpinner();
-
+        updateSpinnerHour();
 
         mAddMailsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,13 +123,10 @@ public class AddReunionFragment extends Fragment implements MailListRecyclerView
                 }
             }
         });
-
         return v;
-
     }
 
 /////////////////////////////CONFIGURE METHODS////////////////////////////////////
-
 
     /////////////SPINNER//////////////////
 
@@ -191,7 +140,6 @@ public class AddReunionFragment extends Fragment implements MailListRecyclerView
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource
                 (getActivity(), res, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         return adapter;
     }
 
@@ -204,11 +152,14 @@ public class AddReunionFragment extends Fragment implements MailListRecyclerView
         mNameRooms = mApiService.generateNameRooms(mReunion);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, mNameRooms);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         return adapter;
     }
 
-    private void updateSpinner()
+    /**
+     * Method to update the Room's spinner
+     * Display the spinner if the date is not empty
+     */
+    private void updateSpinnerRoom()
     {
         mRoomSpinner.setEnabled(mReunion.getmDate() != null && mReunion.getmTime() != null);
 
@@ -233,9 +184,41 @@ public class AddReunionFragment extends Fragment implements MailListRecyclerView
         });
     }
 
+    /**
+     * Method to update the informations of Spinner Room
+     */
+    private void updateSpinnerHour()
+    {
+        mHourSpinner.setAdapter(configSpinner(R.array.hour_spinner));
+        mHourSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                int intHour = Integer.parseInt(adapterView.getItemAtPosition(position).toString());
+                String stringHour;
+                if(intHour < 10)
+                {
+                    stringHour = "0"+intHour+":00";
+                }
+                else
+                {
+                    stringHour = intHour+":00";
+                }
+                mReunion.setmTime(stringHour);
+                mHourTxt.setText(stringHour);
+                updateSpinnerRoom();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+        });
+    }
 
     /////////////DATE//////////////////
 
+    /**
+     * Give an DatePickerDialog for the date
+     * @return DatePickerDialog.OnDateSetListener
+     */
     private DatePickerDialog.OnDateSetListener generateDatePickerDialog()
     {
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -255,12 +238,15 @@ public class AddReunionFragment extends Fragment implements MailListRecyclerView
 
                 mReunion.setmDate(dayString + "/" + monthString + "/" + year);
                 mDateTxt.setText(dayString + "/" + monthString + "/" + year);
-                updateSpinner();
+                updateSpinnerRoom();
             }
         };
         return dateSetListener;
     }
 
+    /**
+     * Display a calendar
+     */
     private void configureDialogCalendar() {
         Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);
@@ -275,11 +261,19 @@ public class AddReunionFragment extends Fragment implements MailListRecyclerView
 
     /////////////MAILS//////////////////
 
+    /**
+     * Configure the RecyclerView for the mails
+     */
     private void configureRecyclerView()
     {
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
+
+    /**
+     * Initialize the list of mails
+     * @param listMails
+     */
     private void initListMails (List<String> listMails)
     {
         this.mAdapter = new MailListRecyclerViewAdapter(listMails,this::clickToDelete);
@@ -287,13 +281,15 @@ public class AddReunionFragment extends Fragment implements MailListRecyclerView
         mAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * Interface method to remove an item of the list of mails
+     * @param position
+     */
     @Override
     public void clickToDelete(int position) {
         String mail = mMailsList.get(position);
         mMailsList.remove(mail);
         initListMails(mMailsList);
     }
-
-
 
 }

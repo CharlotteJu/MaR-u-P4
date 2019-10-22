@@ -35,11 +35,12 @@ public class Reunion
 
     public Reunion () {}
 
-    public Reunion(List<String> aEmails, Room aRoom, String aSubject, String aTime) {
+    public Reunion(List<String> aEmails, Room aRoom, String aSubject, String aTime, String aDate) {
         this.mEmails = aEmails;
         this.mRoom = aRoom;
         this.mSubject = aSubject;
         this.mTime = aTime;
+        this.mDate = aDate;
     }
 
     //////////////////// GETTERS ////////////////////

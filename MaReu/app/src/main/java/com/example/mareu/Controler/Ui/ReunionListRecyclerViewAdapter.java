@@ -55,7 +55,7 @@ public class ReunionListRecyclerViewAdapter extends RecyclerView.Adapter<Reunion
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position)
     {
-        Reunion reunion = fr.mReunions.get(position);//mReunions.get(position);
+        Reunion reunion = fr.mReunions.get(position);
         holder.updateInfos(reunion);
     }
 
@@ -77,7 +77,6 @@ public class ReunionListRecyclerViewAdapter extends RecyclerView.Adapter<Reunion
         public ImageView mAvatar;
 
         private clickToDeleteInterface mClickToDeleteInterface;
-
 
 
         public ViewHolder(@NonNull View itemView, clickToDeleteInterface clickToDeleteInterface) {
@@ -124,7 +123,5 @@ public class ReunionListRecyclerViewAdapter extends RecyclerView.Adapter<Reunion
 
             mMails.setText(mails);
         }
-
-
     }
 }

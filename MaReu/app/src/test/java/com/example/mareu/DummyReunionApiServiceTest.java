@@ -7,7 +7,7 @@ import com.example.mareu.Services.ReunionApiService;
 import com.example.mareu.Model.Reunion;
 import com.example.mareu.Services.RoomsGenerator;
 
-//import org.hamcrest.collection.IsIterableContainingInAnyOrder;
+import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,8 +28,6 @@ import static org.junit.Assert.assertTrue;
 public class DummyReunionApiServiceTest {
 
     private ReunionApiService apiService;
-    private List<String> mailsPourTests;
-    private Calendar calendarPourTests;
     private Room roomForTest;
     private List<Reunion> reunions = new ArrayList<>();
 
@@ -59,8 +57,8 @@ public class DummyReunionApiServiceTest {
     {
         List<Reunion> finalListReunions = apiService.getReunions();
 
-        //assertThat(reunions, IsIterableContainingInAnyOrder.containsInAnyOrder(finalListReunions.toArray()));
-        assertEquals(reunions.size(), finalListReunions.size());
+        assertThat(reunions, IsIterableContainingInAnyOrder.containsInAnyOrder(finalListReunions.toArray()));
+        //assertEquals(reunions.size(), finalListReunions.size());
 
     }
 
