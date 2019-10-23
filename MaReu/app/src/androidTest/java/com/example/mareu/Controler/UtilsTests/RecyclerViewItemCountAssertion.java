@@ -8,6 +8,9 @@ import org.junit.Assert;
 
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.espresso.NoMatchingViewException;
+
+//import android.support.test.espresso.NoMatchingViewException;
+//import android.support.test.espresso.ViewAssertion;
 import androidx.test.espresso.ViewAssertion;
 
 public class RecyclerViewItemCountAssertion implements ViewAssertion {

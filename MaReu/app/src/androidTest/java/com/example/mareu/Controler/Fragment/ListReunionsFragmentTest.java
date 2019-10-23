@@ -1,9 +1,12 @@
 package com.example.mareu.Controler.Fragment;
 
-import androidx.test.espresso.contrib.RecyclerViewActions;
+import androidx.appcompat.widget.Toolbar;
+//import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
+
+import com.example.mareu.Controler.UtilsTests.RecyclerViewActions;
 
 import com.example.mareu.Controler.Activity.MainActivity;
 import com.example.mareu.Controler.UtilsTests.DeleteViewAction;
@@ -36,10 +39,15 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
+
+//import static androidx.test.espresso.action.ViewActions.
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.Matchers.allOf;
 
@@ -128,6 +136,7 @@ public class ListReunionsFragmentTest {
         onView(ViewMatchers.withId(R.id.fragment_list_reunions)).check(withItemCount(ITEMS_COUNT));
 
         // When : We click on the toolbar
+        //onView(ViewMatchers.withId(R.id.toolbar)).perform(Toolbar)
 
     }
 
