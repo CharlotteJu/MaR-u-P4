@@ -115,7 +115,7 @@ public class ReunionListRecyclerViewAdapter extends RecyclerView.Adapter<Reunion
                 mails += reunion.getmEmails().get(i) + ", ";
             }
 
-            if(mails.length() > mDimenSize)
+            if(mails.length() > (mDimenSize*2 -10))
             {
                 mails = mails.substring(0,(mDimenSize*2)-10);
                 mails+="...";
