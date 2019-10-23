@@ -1,12 +1,12 @@
 package com.example.mareu.Controler.Fragment;
 
 import androidx.appcompat.widget.Toolbar;
-//import androidx.test.espresso.contrib.RecyclerViewActions;
+import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
-import com.example.mareu.Controler.UtilsTests.RecyclerViewActions;
+//import com.example.mareu.Controler.UtilsTests.RecyclerViewActions;
 
 import com.example.mareu.Controler.Activity.MainActivity;
 import com.example.mareu.Controler.UtilsTests.DeleteViewAction;
@@ -117,7 +117,7 @@ public class ListReunionsFragmentTest {
     public void myReunionList_deleteAction_shouldRemoveItem()
     {
         // Given : We check that we have 3 Reunions
-        onView(ViewMatchers.withId(R.id.fragment_list_reunions)).check(withItemCount(ITEMS_COUNT));
+        onView(ViewMatchers.withId(R.id.fragment_list_reunions)).check(withItemCount(mReunions.size()));
 
         // When : We perform a click on a delete button
         onView(ViewMatchers.withId(R.id.fragment_list_reunions)).perform(RecyclerViewActions.actionOnItemAtPosition(1, new DeleteViewAction()));

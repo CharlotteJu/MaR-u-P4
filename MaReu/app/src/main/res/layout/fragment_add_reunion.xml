@@ -138,22 +138,16 @@
 
         <!-- List of mails-->
 
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/recycler_view_mails"
-            android:orientation="horizontal"
-            android:fillViewport="true">
+         <androidx.recyclerview.widget.RecyclerView
+             android:layout_width="match_parent"
+             android:layout_height="@dimen/recycler_view_mails"
+             android:layout_marginLeft="@dimen/text_margin"
+             android:layout_marginRight="@dimen/text_margin"
+             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+             tools:listitem="@layout/fragment_one_mail"
+             android:id="@+id/arf_liste_mails"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/text_margin"
-                android:layout_marginRight="@dimen/text_margin"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                tools:listitem="@layout/fragment_one_mail"
-                android:id="@+id/arf_liste_mails"/>
 
-        </androidx.core.widget.NestedScrollView>
 
 
 
