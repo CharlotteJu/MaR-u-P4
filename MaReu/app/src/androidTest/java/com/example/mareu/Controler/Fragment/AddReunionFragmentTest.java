@@ -200,8 +200,10 @@ public class AddReunionFragmentTest
 
         onView(ViewMatchers.withId(R.id.arf_mail)).perform(replaceText("AdresseMail@test.fr"));
         onView(ViewMatchers.withId(R.id.arf_add_mails_button)).perform(scrollTo(), click());
-        
-        onView(ViewMatchers.withId(R.id.arf_final_button)).perform(scrollTo(), click());
+
+        onView(ViewMatchers.withId(R.id.arf_fab)).perform(scrollTo(), click());
+
+        //onView(ViewMatchers.withId(R.id.arf_final_button)).perform(scrollTo(), click());
 
         // Then : The reunion is added on the ReunionList
         onView(ViewMatchers.withId(R.id.fragment_list_reunions)).check(withItemCount(ITEMS_COUNT + 1));

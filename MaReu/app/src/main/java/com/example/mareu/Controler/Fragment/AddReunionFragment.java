@@ -30,6 +30,7 @@ import com.example.mareu.R;
 import com.example.mareu.Services.DummyReunionApiService;
 import com.example.mareu.Services.ReunionApiService;
 import com.example.mareu.Services.RoomsGenerator;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -53,6 +54,7 @@ public class AddReunionFragment extends Fragment implements MailListRecyclerView
     @BindView(R.id.arf_mail) EditText mMailEditText;
     @BindView(R.id.arf_liste_mails) RecyclerView mRecyclerView;
     @BindView(R.id.arf_final_button) Button mFinalButton;
+    @BindView(R.id.arf_fab) FloatingActionButton mFab;
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private List<String> mNameRooms ;
@@ -103,6 +105,24 @@ public class AddReunionFragment extends Fragment implements MailListRecyclerView
                 mReunion.setmEmails(mMailsList);
                 initListMails(mMailsList);
                 mMailEditText.setText("");
+            }
+        });
+
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                if (mReunion.completeReunion())
+                {
+                    mApiService.addReunion(mReunion);
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    startActivity(intent);
+                    mReunion.setmSubject(String.valueOf(mSubjectEdit.getText()));
+                }
+                else
+                {
+                    Toast.makeText(getContext(), "Merci de renseigner toutes les informations", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
