@@ -39,7 +39,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import androidx.recyclerview.widget.RecyclerView;
+
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -47,7 +47,7 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 
-//import static androidx.test.espresso.action.ViewActions.
+
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.Matchers.allOf;
 
@@ -73,10 +73,8 @@ import static org.junit.Assert.*;
 @RunWith(AndroidJUnit4.class)
 public class ListReunionsFragmentTest {
 
-    // Fields
     private MainActivity mReunionListActivity;
     private static int ITEMS_COUNT = 3;
-
 
     private ReunionApiService mApiService = new DummyReunionApiService();
     private List<Reunion> mReunions = mApiService.getReunions();
@@ -117,7 +115,7 @@ public class ListReunionsFragmentTest {
     public void myReunionList_deleteAction_shouldRemoveItem()
     {
         // Given : We check that we have 3 Reunions
-        onView(ViewMatchers.withId(R.id.fragment_list_reunions)).check(withItemCount(mReunions.size()));
+        onView(ViewMatchers.withId(R.id.fragment_list_reunions)).check(withItemCount(ITEMS_COUNT));
 
         // When : We perform a click on a delete button
         onView(ViewMatchers.withId(R.id.fragment_list_reunions)).perform(RecyclerViewActions.actionOnItemAtPosition(1, new DeleteViewAction()));
