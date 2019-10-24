@@ -148,9 +148,6 @@
             android:id="@+id/arf_liste_mails"/>
 
 
-
-
-
         <!-- Final Button -->
 
         <Button

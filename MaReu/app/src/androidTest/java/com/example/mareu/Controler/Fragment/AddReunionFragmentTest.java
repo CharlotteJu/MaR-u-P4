@@ -1,5 +1,7 @@
 package com.example.mareu.Controler.Fragment;
 
+import android.widget.DatePicker;
+
 import androidx.test.espresso.ViewAssertion;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.contrib.PickerActions;
@@ -23,9 +25,11 @@ import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.matcher.RootMatchers.isDialog;
+import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static androidx.test.espresso.matcher.ViewMatchers.isClickable;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withSpinnerText;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.example.mareu.Controler.UtilsTests.RecyclerViewItemCountAssertion.withItemCount;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.core.AllOf.allOf;
@@ -123,20 +127,42 @@ public class AddReunionFragmentTest
     public void myAddReunion_clickSpinnerHour_showSpinner()
     {
         onView(ViewMatchers.withId(R.id.arf_hours_spinner)).perform(scrollTo(), click());
-        onView(withId(R.id.arf_hours_spinner)).check(matches(withSpinnerText(containsString("10"))));
         onData(allOf(is(instanceOf(String.class)),is("10"))).perform(click());
+        onView(withId(R.id.arf_hours_spinner)).check(matches(withSpinnerText(containsString("10"))));
+    }
 
+    @Test
+    public void myAddReunion_clickDate_showDialogPicker()
+    {
+        onView(ViewMatchers.withId(R.id.arf_date)).perform(scrollTo(), click());
+        onView(isAssignableFrom(DatePicker.class)).perform(PickerActions.setDate(2020, 6, 30));
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(withId(R.id.arf_date_txt)).check(matches(allOf(withText("30/06/2020"),
+                isDisplayed())));
     }
 
 
     @Test
     public void myAddReunion_clickSpinnerRoom_showSpinner()
     {
-        Reunion reunion = ;
+        onView(ViewMatchers.withId(R.id.arf_date)).perform(scrollTo(), click());
+        onView(isAssignableFrom(DatePicker.class)).perform(PickerActions.setDate(2020, 6, 30));
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(withId(R.id.arf_date_txt)).check(matches(allOf(withText("30/06/2020"),
+                isDisplayed())));
 
         onView(ViewMatchers.withId(R.id.arf_hours_spinner)).perform(scrollTo(), click());
-        onView(withId(R.id.arf_hours_spinner)).check(matches(withSpinnerText(containsString("10"))));
         onData(allOf(is(instanceOf(String.class)),is("10"))).perform(click());
+        onView(withId(R.id.arf_hours_spinner)).check(matches(withSpinnerText(containsString("10"))));
+
+
+        onView(ViewMatchers.withId(R.id.arf_room)).check(matches(isClickable()));
+
+
+        onView(ViewMatchers.withId(R.id.arf_room)).perform(scrollTo(), click());
+        onData(allOf(is(instanceOf(String.class)),is("Salle 1"))).perform(click());
+        onView(withId(R.id.arf_room)).check(matches(withSpinnerText(containsString("Salle 1"))));
+
 
     }
 
@@ -154,13 +180,28 @@ public class AddReunionFragmentTest
         onView(ViewMatchers.withId(R.id.arf_subject_edit_text)).perform(scrollTo(), click());
         onView(ViewMatchers.withId(R.id.arf_subject_edit_text)).perform(replaceText("Réunion Test"));
         onView(ViewMatchers.withId(R.id.arf_date)).perform(scrollTo(), click());
-        //onView(ViewMatchers.withId(R.id.arf_date)).perform(click());
-        //onView(ViewMatchers.withId(R.id.arf_hours_spinner)).perform(withSpinnerText());
-        //onView(ViewMatchers.withId(R.id.arf_room)).perform(matches(isClickable(true)));
-        //onView(ViewMatchers.withId(R.id.arf_room)).perform(withSpinnerText());
+
+        onView(isAssignableFrom(DatePicker.class)).perform(PickerActions.setDate(2020, 6, 30));
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(withId(R.id.arf_date_txt)).check(matches(allOf(withText("30/06/2020"),
+                isDisplayed())));
+
+        onView(ViewMatchers.withId(R.id.arf_hours_spinner)).perform(scrollTo(), click());
+        onData(allOf(is(instanceOf(String.class)),is("10"))).perform(click());
+        onView(withId(R.id.arf_hours_spinner)).check(matches(withSpinnerText(containsString("10"))));
+
+
+        onView(ViewMatchers.withId(R.id.arf_room)).check(matches(isClickable()));
+
+
+        onView(ViewMatchers.withId(R.id.arf_room)).perform(scrollTo(), click());
+        onData(allOf(is(instanceOf(String.class)),is("Salle 1"))).perform(click());
+        onView(withId(R.id.arf_room)).check(matches(withSpinnerText(containsString("Salle 1"))));
+
         onView(ViewMatchers.withId(R.id.arf_mail)).perform(replaceText("AdresseMail@test.fr"));
-        onView(ViewMatchers.withId(R.id.arf_add_mails_button)).perform(click());
-        onView(ViewMatchers.withId(R.id.arf_final_button)).perform(click());
+        onView(ViewMatchers.withId(R.id.arf_add_mails_button)).perform(scrollTo(), click());
+        
+        onView(ViewMatchers.withId(R.id.arf_final_button)).perform(scrollTo(), click());
 
         // Then : The reunion is added on the ReunionList
         onView(ViewMatchers.withId(R.id.fragment_list_reunions)).check(withItemCount(ITEMS_COUNT + 1));

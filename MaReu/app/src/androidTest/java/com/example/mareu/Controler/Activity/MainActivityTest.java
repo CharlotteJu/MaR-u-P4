@@ -95,7 +95,7 @@ public class MainActivityTest {
                         isDisplayed()));
         linearLayout.check(matches(isDisplayed()));
 
-        ViewInteraction view = onView(
+        /*ViewInteraction view = onView(
                 allOf(withContentDescription("27 October 2019"),
                         childAtPosition(
                                 allOf(IsInstanceOf.<View>instanceOf(android.view.View.class),
@@ -115,7 +115,7 @@ public class MainActivityTest {
                                                 0)),
                                 26),
                         isDisplayed()));
-        view2.check(matches(isDisplayed()));
+        view2.check(matches(isDisplayed()));*/
 
         ViewInteraction appCompatButton2 = onView(
                 allOf(withId(android.R.id.button1), withText("OK"),
