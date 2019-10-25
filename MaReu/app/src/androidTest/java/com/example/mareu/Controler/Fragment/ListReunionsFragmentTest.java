@@ -1,7 +1,9 @@
 package com.example.mareu.Controler.Fragment;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.test.espresso.contrib.PickerActions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
+import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
@@ -19,6 +21,7 @@ import com.example.mareu.Services.RoomsGenerator;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.widget.DatePicker;
 
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.filters.LargeTest;
@@ -32,6 +35,7 @@ import com.example.mareu.R;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsInstanceOf;
 
 import org.junit.Before;
@@ -40,18 +44,26 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 
-
+import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 
 
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withSpinnerText;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.Matchers.allOf;
 
 import static com.example.mareu.Controler.UtilsTests.RecyclerViewItemCountAssertion.withItemCount;
+import static com.example.mareu.Controler.UtilsTests.ToolbarMatcher.childAtPosition;
 
 import com.example.mareu.R;
 
@@ -67,6 +79,10 @@ import org.junit.runner.RunWith;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.Matchers.anything;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.*;
 
@@ -125,16 +141,20 @@ public class ListReunionsFragmentTest {
 
     }
 
-
-    // A FINIR
     @Test
     public void myReunionList_clickToolbarAction_shouldDisplayFilterDate()
     {
         // Given : We check that we have 3 Reunions
         onView(ViewMatchers.withId(R.id.fragment_list_reunions)).check(withItemCount(ITEMS_COUNT));
 
-        // When : We click on the toolbar
-        //onView(ViewMatchers.withId(R.id.toolbar)).perform(Toolbar)
+        // When : We click on the toolbar and put a Date
+        openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
+        onView(ViewMatchers.withText("Filtre par Date")).perform(click());
+        onView(isAssignableFrom(DatePicker.class)).perform(PickerActions.setDate(2020, 10, 22));
+        onView(withId(android.R.id.button1)).perform(click());
+
+        // Then : We have the reunions with this date
+        onView(ViewMatchers.withId(R.id.fragment_list_reunions)).check(withItemCount(2));
 
     }
 
@@ -145,7 +165,42 @@ public class ListReunionsFragmentTest {
         // Given : We check that we have 3 Reunions
         onView(ViewMatchers.withId(R.id.fragment_list_reunions)).check(withItemCount(ITEMS_COUNT));
 
-        // When : We click on the toolbar
+        // When : We click on the toolbar and choose a room
+        openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
+        onView(ViewMatchers.withText("Filtre par Salle")).perform(click());
+
+
+        onData(AllOf.allOf(is(instanceOf(String.class)),is("Salle 3"))).perform(click());
+       
+       // onView(withId(R.id.dsf_spinner)).inRoot(RootMatchers.isDialog()).check(matches(withSpinnerText(containsString("Salle 3"))));
+        onView(withId(R.id.dsf_spinner)).inRoot(RootMatchers.isPlatformPopup()).check(matches(isDisplayed()));
+        onView(ViewMatchers.withText("FILTRER")).perform(click());
+
+        // Then : The list has 1 reunion
+        onView(ViewMatchers.withId(R.id.fragment_list_reunions)).check(withItemCount(1));
+
+
+    }
+
+    @Test
+    public void myReunionList_clickToolbarAction_shouldDisplayAll()
+    {
+        // Given : We check that we have 3 Reunions
+        onView(ViewMatchers.withId(R.id.fragment_list_reunions)).check(withItemCount(ITEMS_COUNT));
+
+        // When : We click on the toolbar and put a Date to change the list
+        openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
+        onView(ViewMatchers.withText("Filtre par Date")).perform(click());
+        onView(isAssignableFrom(DatePicker.class)).perform(PickerActions.setDate(2020, 10, 22));
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(ViewMatchers.withId(R.id.fragment_list_reunions)).check(withItemCount(2));
+
+        // When : We click on the toolbar and choose All the Reunions
+        openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
+        onView(ViewMatchers.withText("Toutes les Réunions")).perform(click());
+
+        // Then : The list has all the reunions
+        onView(ViewMatchers.withId(R.id.fragment_list_reunions)).check(withItemCount(ITEMS_COUNT));
 
     }
 
