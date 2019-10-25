@@ -1,6 +1,7 @@
 package com.example.mareu.Controler.Fragment;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.test.espresso.DataInteraction;
 import androidx.test.espresso.contrib.PickerActions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.matcher.RootMatchers;
@@ -55,6 +56,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 
 
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withSpinnerText;
@@ -169,11 +171,16 @@ public class ListReunionsFragmentTest {
         openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
         onView(ViewMatchers.withText("Filtre par Salle")).perform(click());
 
+        //Create a ViewInteraction to click on the spinner
+        ViewInteraction appCompatSpinner = onView(allOf(withId(R.id.dsf_spinner),
+                childAtPosition(allOf(withId(R.id.dsf_layout),
+                        childAtPosition(withId(android.R.id.custom), 0)), 0),
+                isDisplayed()));
 
-        onData(AllOf.allOf(is(instanceOf(String.class)),is("Salle 3"))).perform(click());
-       
-       // onView(withId(R.id.dsf_spinner)).inRoot(RootMatchers.isDialog()).check(matches(withSpinnerText(containsString("Salle 3"))));
-        onView(withId(R.id.dsf_spinner)).inRoot(RootMatchers.isPlatformPopup()).check(matches(isDisplayed()));
+        appCompatSpinner.perform(click());
+        //Click on the fourth position in the spinner list (salle 3)
+        onData(anything()).inRoot(RootMatchers.isPlatformPopup()).atPosition(2).perform(click());
+
         onView(ViewMatchers.withText("FILTRER")).perform(click());
 
         // Then : The list has 1 reunion
