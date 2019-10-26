@@ -65,6 +65,7 @@ public class ListReunionsFragment extends Fragment implements ReunionListRecycle
      */
     private void initList()
     {
+        ReunionsGenerator.getmReunions();
         mReunions = mApiService.getReunions();
         adapter = new ReunionListRecyclerViewAdapter(mReunions, dimenSize, this::clickToDelete, this);
         mRecyclerView.setAdapter(adapter);

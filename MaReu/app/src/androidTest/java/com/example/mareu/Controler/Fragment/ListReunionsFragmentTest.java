@@ -94,6 +94,7 @@ public class ListReunionsFragmentTest {
         onView(ViewMatchers.withId(R.id.fragment_list_reunions)).check(withItemCount(mReunions.size()));
     }
 
+
     @Test
     public void myReunionList_deleteAction_shouldRemoveItem()
     {
@@ -107,6 +108,8 @@ public class ListReunionsFragmentTest {
         onView(ViewMatchers.withId(R.id.fragment_list_reunions)).check(withItemCount(ITEMS_COUNT - 1));
 
     }
+
+
 
     @Test
     public void myReunionList_clickToolbarAction_shouldDisplayFilterDate()
@@ -184,5 +187,6 @@ public class ListReunionsFragmentTest {
         onView(ViewMatchers.withId(R.id.add_reunion_fragment)).check(matches(isDisplayed()));
 
     }
+
 
 }

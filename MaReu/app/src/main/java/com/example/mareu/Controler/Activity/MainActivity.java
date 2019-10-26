@@ -16,6 +16,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 
 import android.view.LayoutInflater;
@@ -57,14 +58,10 @@ public class MainActivity extends AppCompatActivity {
         configureMainFragment();
         configureDetailsFragment();
         configureToolbar();
+        configureFabButton();
 
         mDateSetListener = generateDatePickerDialog();
-
-        if (findViewById(R.id.add_reunion_fragment) == null)
-        {
-           configureFabButton();
-        }
-    }
+   }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -136,19 +133,25 @@ public class MainActivity extends AppCompatActivity {
      */
     private void configureFabButton()
     {
+
         fab = findViewById(R.id.fab);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        if (findViewById(R.id.add_reunion_fragment) == null)
+        {
 
-                if(mAddReunionFragment == null)
-                {
-                    Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
-                    startActivity(intent);
+
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if(mAddReunionFragment == null)
+                    {
+                        Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+                        startActivity(intent);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
 

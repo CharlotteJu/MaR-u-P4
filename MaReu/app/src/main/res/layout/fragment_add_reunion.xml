@@ -154,7 +154,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:baselineAlignBottom="true"
-            android:layout_gravity="center"
+            android:layout_gravity="right"
             app:srcCompat="@drawable/ic_add_white_24dp"
             android:backgroundTint="#E91C1C"
             android:id="@+id/arf_fab"
