@@ -1,7 +1,5 @@
 package com.example.mareu.Controler.Fragment;
 
-import androidx.appcompat.widget.Toolbar;
-import androidx.test.espresso.DataInteraction;
 import androidx.test.espresso.contrib.PickerActions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.matcher.RootMatchers;
@@ -9,7 +7,6 @@ import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
-//import com.example.mareu.Controler.UtilsTests.RecyclerViewActions;
 
 import com.example.mareu.Controler.Activity.MainActivity;
 import com.example.mareu.Controler.UtilsTests.DeleteViewAction;
@@ -19,25 +16,11 @@ import com.example.mareu.Services.DummyReunionApiService;
 import com.example.mareu.Services.ReunionApiService;
 import com.example.mareu.Services.RoomsGenerator;
 
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
+
 import android.widget.DatePicker;
-
 import androidx.test.espresso.ViewInteraction;
-import androidx.test.filters.LargeTest;
-import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
-
-
-
 import com.example.mareu.R;
 
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
-import org.hamcrest.core.AllOf;
-import org.hamcrest.core.IsInstanceOf;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -49,42 +32,22 @@ import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 
 
-import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
-import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withSpinnerText;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.Matchers.allOf;
 
 import static com.example.mareu.Controler.UtilsTests.RecyclerViewItemCountAssertion.withItemCount;
 import static com.example.mareu.Controler.UtilsTests.ToolbarMatcher.childAtPosition;
 
-import com.example.mareu.R;
-
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-
-
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.anything;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.*;
 
@@ -109,6 +72,8 @@ public class ListReunionsFragmentTest {
     {
         mReunionListActivity = mActivityRule.getActivity();
         assertThat(mReunionListActivity, notNullValue());
+
+        mApiService.getReunions().clear();
 
         aMails.add("mail1@test.fr");
         aMails.add("mail2@test.fr");
@@ -160,7 +125,7 @@ public class ListReunionsFragmentTest {
 
     }
 
-    // A FINIR
+
     @Test
     public void myReunionList_clickToolbarAction_shouldDisplayFilterRoom()
     {
@@ -176,9 +141,7 @@ public class ListReunionsFragmentTest {
                 childAtPosition(allOf(withId(R.id.dsf_layout),
                         childAtPosition(withId(android.R.id.custom), 0)), 0),
                 isDisplayed()));
-
         appCompatSpinner.perform(click());
-        //Click on the fourth position in the spinner list (salle 3)
         onData(anything()).inRoot(RootMatchers.isPlatformPopup()).atPosition(2).perform(click());
 
         onView(ViewMatchers.withText("FILTRER")).perform(click());

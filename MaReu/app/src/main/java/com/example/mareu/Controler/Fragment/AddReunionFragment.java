@@ -53,7 +53,7 @@ public class AddReunionFragment extends Fragment implements MailListRecyclerView
     @BindView(R.id.arf_add_mails_button) Button mAddMailsButton;
     @BindView(R.id.arf_mail) EditText mMailEditText;
     @BindView(R.id.arf_liste_mails) RecyclerView mRecyclerView;
-    @BindView(R.id.arf_final_button) Button mFinalButton;
+    //@BindView(R.id.arf_final_button) Button mFinalButton;
     @BindView(R.id.arf_fab) FloatingActionButton mFab;
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
@@ -126,23 +126,6 @@ public class AddReunionFragment extends Fragment implements MailListRecyclerView
             }
         });
 
-        mFinalButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                if (mReunion.completeReunion())
-                {
-                    mApiService.addReunion(mReunion);
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    startActivity(intent);
-                    mReunion.setmSubject(String.valueOf(mSubjectEdit.getText()));
-                }
-                else
-                {
-                    Toast.makeText(getContext(), "Merci de renseigner toutes les informations", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
         return v;
     }
 
