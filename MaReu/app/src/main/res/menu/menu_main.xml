@@ -7,7 +7,8 @@
     <item
         android:icon="@drawable/icon_menu_hamburger"
         app:showAsAction="always"
-        android:title="Filtrer">
+        android:title="Filtrer"
+        android:id="@+id/menu_button">
 
         <menu>
 

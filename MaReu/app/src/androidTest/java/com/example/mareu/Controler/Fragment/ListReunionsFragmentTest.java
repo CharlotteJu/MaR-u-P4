@@ -30,7 +30,6 @@ import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
@@ -38,7 +37,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 
 
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.Matchers.allOf;
 
 import static com.example.mareu.Controler.UtilsTests.RecyclerViewItemCountAssertion.withItemCount;
@@ -118,7 +116,7 @@ public class ListReunionsFragmentTest {
         onView(ViewMatchers.withId(R.id.fragment_list_reunions)).check(withItemCount(ITEMS_COUNT));
 
         // When : We click on the toolbar and put a Date
-        openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
+        onView(withId(R.id.menu_button)).perform(click());
         onView(ViewMatchers.withText("Filtre par Date")).perform(click());
         onView(isAssignableFrom(DatePicker.class)).perform(PickerActions.setDate(2020, 10, 22));
         onView(withId(android.R.id.button1)).perform(click());
@@ -136,7 +134,7 @@ public class ListReunionsFragmentTest {
         onView(ViewMatchers.withId(R.id.fragment_list_reunions)).check(withItemCount(ITEMS_COUNT));
 
         // When : We click on the toolbar and choose a room
-        openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
+        onView(withId(R.id.menu_button)).perform(click());
         onView(ViewMatchers.withText("Filtre par Salle")).perform(click());
 
         //Create a ViewInteraction to click on the spinner
@@ -162,14 +160,14 @@ public class ListReunionsFragmentTest {
         onView(ViewMatchers.withId(R.id.fragment_list_reunions)).check(withItemCount(ITEMS_COUNT));
 
         // When : We click on the toolbar and put a Date to change the list
-        openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
+        onView(withId(R.id.menu_button)).perform(click());
         onView(ViewMatchers.withText("Filtre par Date")).perform(click());
         onView(isAssignableFrom(DatePicker.class)).perform(PickerActions.setDate(2020, 10, 22));
         onView(withId(android.R.id.button1)).perform(click());
         onView(ViewMatchers.withId(R.id.fragment_list_reunions)).check(withItemCount(2));
 
         // When : We click on the toolbar and choose All the Reunions
-        openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
+        onView(withId(R.id.menu_button)).perform(click());
         onView(ViewMatchers.withText("Toutes les Réunions")).perform(click());
 
         // Then : The list has all the reunions

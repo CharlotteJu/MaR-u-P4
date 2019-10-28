@@ -37,7 +37,17 @@ public interface ReunionApiService
      */
     List<String> generateNameRooms(Reunion reunion);
 
+    /**
+     * Give a list of Reunions with the same date
+     * @param date
+     * @return
+     */
     List<Reunion> filterDate(String date);
 
+    /**
+     * Give a list of Reunions with the same room
+     * @param room
+     * @return
+     */
     List<Reunion> filterRoom(Room room);
 }
