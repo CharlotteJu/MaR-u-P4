@@ -42,7 +42,7 @@ public class ReunionListRecyclerViewAdapter extends RecyclerView.Adapter<Reunion
         this.mDimenSize = dimenSize;
         this.mClickToDeleteInterface = clickToDeleteInterface;
         fr = fragment;
-        mReunions = fr.mReunions;
+        this.mReunions = fr.mReunions;
     }
 
     @Override
@@ -110,10 +110,11 @@ public class ReunionListRecyclerViewAdapter extends RecyclerView.Adapter<Reunion
 
             // Cast the list in String
             String mails = "";
-            for (int i = 0; i < reunion.getmEmails().size(); i ++)
+            for (int i = 0; i < reunion.getmEmails().size()-1; i ++)
             {
                 mails += reunion.getmEmails().get(i) + ", ";
             }
+            mails += reunion.getmEmails().get(reunion.getmEmails().size()-1);
 
             if(mails.length() > (mDimenSize+10))
             {

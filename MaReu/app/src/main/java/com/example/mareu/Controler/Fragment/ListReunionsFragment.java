@@ -35,16 +35,26 @@ public class ListReunionsFragment extends Fragment implements ReunionListRecycle
     private ReunionApiService mApiService;
     private RecyclerView.Adapter adapter;
     private int dimenSize; // Relative size for the text
+    private static int dimenPlus = 0;
 
     public ListReunionsFragment() {
         // Required empty public constructor
+    }
+
+    public static ListReunionsFragment newInstance (boolean tablette)
+    {
+        if (tablette == true)
+        {
+            dimenPlus = 30;
+        }
+        return new ListReunionsFragment();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mApiService = DI.getNeighbourApiService();
-        dimenSize = getResources().getInteger(R.integer.title_list_reunions_size);
+        dimenSize = getResources().getInteger(R.integer.title_list_reunions_size) + dimenPlus;
     }
 
     @Override

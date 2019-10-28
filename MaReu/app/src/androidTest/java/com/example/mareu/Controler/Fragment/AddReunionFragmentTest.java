@@ -66,18 +66,7 @@ public class AddReunionFragmentTest
         mAddReunionActivity = mActivityRule.getActivity();
         assertThat(mAddReunionActivity, notNullValue());
 
-        mApiService.getReunions().clear();
 
-        aMails.add("mail1@test.fr");
-        aMails.add("mail2@test.fr");
-
-        Reunion reunionTest1 = new Reunion(aMails, mRooms[0], "Réunion Test 1", "10:00", "22/10/2020");
-        Reunion reunionTest2 = new Reunion(aMails, mRooms[1], "Réunion Test 2", "15:00", "22/10/2020");
-        Reunion reunionTest3 = new Reunion(aMails, mRooms[2], "Réunion Test 3", "14:00", "12/12/2020");
-
-        mApiService.addReunion(reunionTest1);
-        mApiService.addReunion(reunionTest2);
-        mApiService.addReunion(reunionTest3);
     }
 
     @Test

@@ -1,5 +1,6 @@
 package com.example.mareu.Controler.Activity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -32,6 +33,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import static android.view.View.INVISIBLE;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -105,9 +108,14 @@ public class MainActivity extends AppCompatActivity {
     public void configureMainFragment()
     {
         mListReunionsFragments = (ListReunionsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_list_reunions);
-        if (mListReunionsFragments == null)
+        if (mListReunionsFragments == null && findViewById(R.id.activity_details_container) == null)
         {
-            mListReunionsFragments = new ListReunionsFragment();
+            mListReunionsFragments = ListReunionsFragment.newInstance(false);
+            getSupportFragmentManager().beginTransaction().add(R.id.activity_main_container, mListReunionsFragments).commit();
+        }
+        else if (mListReunionsFragments == null && findViewById(R.id.activity_details_container) != null)
+        {
+            mListReunionsFragments = ListReunionsFragment.newInstance(true);
             getSupportFragmentManager().beginTransaction().add(R.id.activity_main_container, mListReunionsFragments).commit();
         }
     }
@@ -133,13 +141,10 @@ public class MainActivity extends AppCompatActivity {
      */
     private void configureFabButton()
     {
-
         fab = findViewById(R.id.fab);
 
         if (findViewById(R.id.add_reunion_fragment) == null)
         {
-
-
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

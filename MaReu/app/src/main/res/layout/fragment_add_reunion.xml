@@ -23,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Sujet de la réunion"
+            android:textSize="@dimen/text_size"
             android:layout_margin="@dimen/text_margin"
             android:id="@+id/arf_subject_edit_text"/>
 
@@ -99,6 +100,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/spinner_room_size"
             android:gravity="center"
+            android:scrollbarSize="@dimen/spinner_room_size"
             android:textAlignment="center"
             android:id="@+id/arf_room"/>
 
@@ -121,6 +123,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="eMail du Participant"
+                android:textSize="@dimen/title_size"
                 android:layout_weight="1"
                 android:id="@+id/arf_mail"/>
 
@@ -155,12 +158,18 @@
             android:layout_height="wrap_content"
             android:baselineAlignBottom="true"
             android:layout_gravity="right"
+            android:paddingBottom="100dp"
             app:srcCompat="@drawable/ic_add_white_24dp"
             android:backgroundTint="#E91C1C"
             android:id="@+id/arf_fab"
             />
 
-    </LinearLayout>
+        <Button
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:visibility="invisible"/>
+
+     </LinearLayout>
 
 
-</ScrollView>
+ </ScrollView>

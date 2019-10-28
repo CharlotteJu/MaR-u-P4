@@ -29,8 +29,8 @@
         android:layout_alignBottom="@id/layout_frame_container"
         app:srcCompat="@drawable/ic_add_white_24dp"
         android:backgroundTint="#E91C1C"
+        android:visibility="gone"
         android:clickable="false"
-        android:visibility="invisible"
         android:layout_margin="@dimen/fab_margin" />
 
 

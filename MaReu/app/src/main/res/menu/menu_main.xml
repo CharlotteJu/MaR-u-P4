@@ -3,22 +3,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.mareu.Controler.Activity.MainActivity">
 
-    <item
-        android:id="@+id/no_filter"
-        android:orderInCategory="100"
-        android:title="@string/no_filter"
-        app:showAsAction="never" />
 
     <item
-        android:id="@+id/filter_date"
-        android:orderInCategory="100"
-        android:title="@string/filter_date"
-        app:showAsAction="never" />
+        android:icon="@drawable/icon_menu_hamburger"
+        app:showAsAction="always"
+        android:title="Filtrer">
 
-    <item
-        android:id="@+id/filter_room"
-        android:orderInCategory="100"
-        android:title="@string/filter_room"
-        app:showAsAction="never" />
+        <menu>
 
+            <item
+                android:id="@+id/no_filter"
+                android:orderInCategory="100"
+                android:title="@string/no_filter"
+                app:showAsAction="never" />
+
+            <item
+                android:id="@+id/filter_date"
+                android:orderInCategory="100"
+                android:title="@string/filter_date"
+                app:showAsAction="never" />
+
+            <item
+                android:id="@+id/filter_room"
+                android:orderInCategory="100"
+                android:title="@string/filter_room"
+                app:showAsAction="never" />
+
+        </menu>
+    </item>
 </menu>
