@@ -57,7 +57,6 @@ It is developed on Android Studio under Java 8 from API 21.
 ## Installation 
 
 - Retrieve the program via the Download button or by using git clone via this link 
-
 https://github.com/CharlotteJu/MaR-u-P4
 
 - Launch Android Studio, Open/File and choose this file
