@@ -9,17 +9,10 @@ public class Room {
 
     private String mName;
     private int mRes;
-    private List<Reunion> mPlanningThisRoom;
 
     public Room(String mName, int mRes) {
         this.mName = mName;
         this.mRes = mRes;
-
-        if (mPlanningThisRoom == null)
-        {
-            mPlanningThisRoom = new ArrayList<>();
-        }
-
     }
 
     //////////////////// GETTERS ////////////////////
@@ -32,10 +25,6 @@ public class Room {
         return mRes;
     }
 
-    public List<Reunion> getmPlanningThisRoom() {
-        return mPlanningThisRoom;
-    }
-
     //////////////////// SETTERS ////////////////////
 
     public void setmName(String mName) {
@@ -44,10 +33,6 @@ public class Room {
 
     public void setmRes(int mRes) {
         this.mRes = mRes;
-    }
-
-    public void setmPlanningThisRoom(List<Reunion> mPlanningThisRoom) {
-        this.mPlanningThisRoom = mPlanningThisRoom;
     }
 
     @Override

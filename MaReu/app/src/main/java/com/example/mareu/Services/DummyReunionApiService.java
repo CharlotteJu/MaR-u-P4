@@ -33,8 +33,6 @@ public class DummyReunionApiService implements ReunionApiService {
         if(LIST_REUNIONS.contains(reunion))
         {
             LIST_REUNIONS.remove(reunion);
-            Room room = reunion.getmRoom();
-            room.getmPlanningThisRoom().remove(reunion);
         }
     }
 
@@ -44,8 +42,6 @@ public class DummyReunionApiService implements ReunionApiService {
         if(!LIST_REUNIONS.contains(reunion))
         {
             LIST_REUNIONS.add(reunion);
-            Room room = reunion.getmRoom();
-            room.getmPlanningThisRoom().add(reunion);
         }
     }
 
@@ -102,8 +98,6 @@ public class DummyReunionApiService implements ReunionApiService {
                 list.add(DummyReunionApiService.LIST_REUNIONS.get(i));
             }
         }
-
-        //List<Reunion> liste = room.getmPlanningThisRoom();
 
         return list;
     }

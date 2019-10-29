@@ -58,18 +58,14 @@ public class DummyReunionApiServiceTest {
         List<Reunion> finalListReunions = apiService.getReunions();
 
         assertThat(reunions, IsIterableContainingInAnyOrder.containsInAnyOrder(finalListReunions.toArray()));
-        //assertEquals(reunions.size(), finalListReunions.size());
-
     }
 
     @Test
     public void deleteReunionWithSuccess()
     {
         Reunion reunion = apiService.getReunions().get(0);
-        Room room = reunion.getmRoom();
         apiService.deleteReunion(reunion);
         assertFalse(apiService.getReunions().contains(reunion));
-        assertFalse(room.getmPlanningThisRoom().contains(reunion));
     }
 
     @Test
@@ -77,10 +73,8 @@ public class DummyReunionApiServiceTest {
     {
         Reunion reunion = new Reunion();
         reunion.setmRoom(roomForTest);
-        Room room = reunion.getmRoom();
         apiService.addReunion(reunion);
         assertTrue(apiService.getReunions().contains(reunion));
-        assertTrue(room.getmPlanningThisRoom().contains(reunion));
     }
 
     @Test
