@@ -111,12 +111,12 @@ public class MainActivity extends AppCompatActivity {
         if (mListReunionsFragments == null && findViewById(R.id.activity_details_container) == null)
         {
             mListReunionsFragments = ListReunionsFragment.newInstance(false);
-            getSupportFragmentManager().beginTransaction().add(R.id.activity_main_container, mListReunionsFragments).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_container, mListReunionsFragments).commit();
         }
         else if (mListReunionsFragments == null && findViewById(R.id.activity_details_container) != null)
         {
             mListReunionsFragments = ListReunionsFragment.newInstance(true);
-            getSupportFragmentManager().beginTransaction().add(R.id.activity_main_container, mListReunionsFragments).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_container, mListReunionsFragments).commit();
         }
     }
 
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
         if(mAddReunionFragment == null && findViewById(R.id.activity_details_container) != null)
         {
             mAddReunionFragment = new AddReunionFragment();
-            getSupportFragmentManager().beginTransaction().add(R.id.activity_details_container, mAddReunionFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.activity_details_container, mAddReunionFragment).commit();
         }
     }
 
