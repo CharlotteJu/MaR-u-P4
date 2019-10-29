@@ -1,7 +1,13 @@
 package com.example.mareu.Controler.Fragment;
 
+import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
+import androidx.test.espresso.NoMatchingViewException;
+import androidx.test.espresso.ViewAssertion;
 import androidx.test.espresso.contrib.PickerActions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
@@ -186,6 +192,13 @@ public class AddReunionFragmentTest
 
         onView(ViewMatchers.withId(R.id.arf_mail)).perform(replaceText("AdresseMail@test.fr"));
         onView(ViewMatchers.withId(R.id.arf_add_mails_button)).perform(scrollTo(), click());
+
+        onView(withId(R.id.add_reunion_fragment)).check(new ViewAssertion() {
+            @Override
+            public void check(View view, NoMatchingViewException noViewFoundException) {
+                ((LinearLayout) view).addView(new Button(view.getContext()));
+            }
+        });
 
         onView(ViewMatchers.withId(R.id.arf_fab)).perform(scrollTo(), click());
 
