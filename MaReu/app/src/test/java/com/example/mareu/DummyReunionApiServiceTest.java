@@ -51,7 +51,7 @@ public class DummyReunionApiServiceTest {
             LIST_REUNIONS.add(r);
         }
     }
-    
+
     @Test
     public void getReunionsWithSuccess()
     {

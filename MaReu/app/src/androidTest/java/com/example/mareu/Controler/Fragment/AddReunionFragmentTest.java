@@ -20,6 +20,7 @@ import com.example.mareu.Model.Room;
 import com.example.mareu.R;
 import com.example.mareu.Services.DummyReunionApiService;
 import com.example.mareu.Services.ReunionApiService;
+import com.example.mareu.Services.ReunionsGenerator;
 import com.example.mareu.Services.RoomsGenerator;
 
 import static androidx.test.espresso.Espresso.onData;
@@ -31,6 +32,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.example.mareu.Controler.UtilsTests.RecyclerViewItemCountAssertion.withItemCount;
+import static com.example.mareu.Services.RoomsGenerator.getListRooms;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.core.AllOf.allOf;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
@@ -59,7 +61,7 @@ public class AddReunionFragmentTest
 
     private ReunionApiService mApiService = new DummyReunionApiService();
     private List<Reunion> mReunions = mApiService.getReunions();
-    private Room[] mRooms = RoomsGenerator.getListRooms();
+    private Room[] mRooms = getListRooms();
     private List<String> aMails = new ArrayList<>();
 
     @Rule
@@ -72,7 +74,18 @@ public class AddReunionFragmentTest
         mAddReunionActivity = mActivityRule.getActivity();
         assertThat(mAddReunionActivity, notNullValue());
 
+        mApiService.getReunions().clear();
 
+        aMails.add("mail1@test.fr");
+        aMails.add("mail2@test.fr");
+
+        Reunion reunionTest1 = new Reunion(aMails, mRooms[0], "Réunion Test 1", "10:00", "22/10/2020");
+        Reunion reunionTest2 = new Reunion(aMails, mRooms[1], "Réunion Test 2", "15:00", "22/10/2020");
+        Reunion reunionTest3 = new Reunion(aMails, mRooms[2], "Réunion Test 3", "14:00", "12/12/2020");
+
+        mApiService.addReunion(reunionTest1);
+        mApiService.addReunion(reunionTest2);
+        mApiService.addReunion(reunionTest3);
     }
 
     @Test
@@ -138,7 +151,6 @@ public class AddReunionFragmentTest
                 isDisplayed())));
     }
 
-
     @Test
     public void myAddReunion_clickSpinnerRoom_showSpinner()
     {
@@ -162,8 +174,6 @@ public class AddReunionFragmentTest
         onView(withId(R.id.arf_room)).check(matches(withSpinnerText(containsString("Salle 1"))));
 
     }
-
-
 
     @Test
     public void myAddReunion_clickButtonCreate_addReunion()
