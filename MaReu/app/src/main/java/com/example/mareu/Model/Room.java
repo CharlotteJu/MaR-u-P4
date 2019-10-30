@@ -6,8 +6,14 @@ import java.util.List;
 import java.util.Objects;
 
 public class Room {
-
+    /**
+     * Name of the Room
+     */
     private String mName;
+
+    /**
+     * Link with the res Drawable
+     */
     private int mRes;
 
     public Room(String mName, int mRes) {

@@ -53,7 +53,6 @@ public class AddReunionFragment extends Fragment implements MailListRecyclerView
     @BindView(R.id.arf_add_mails_button) Button mAddMailsButton;
     @BindView(R.id.arf_mail) EditText mMailEditText;
     @BindView(R.id.arf_liste_mails) RecyclerView mRecyclerView;
-    //@BindView(R.id.arf_final_button) Button mFinalButton;
     @BindView(R.id.arf_fab) FloatingActionButton mFab;
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
@@ -165,7 +164,6 @@ public class AddReunionFragment extends Fragment implements MailListRecyclerView
     private void updateSpinnerRoom()
     {
         mRoomSpinner.setEnabled(mReunion.getmDate() != null && mReunion.getmTime() != null);
-
         mRoomSpinner.setAdapter(configSpinnerRooms());
         mRoomSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -182,6 +180,7 @@ public class AddReunionFragment extends Fragment implements MailListRecyclerView
                     }
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
@@ -222,23 +221,16 @@ public class AddReunionFragment extends Fragment implements MailListRecyclerView
      * Give an DatePickerDialog for the date
      * @return DatePickerDialog.OnDateSetListener
      */
-    private DatePickerDialog.OnDateSetListener generateDatePickerDialog()
-    {
+    private DatePickerDialog.OnDateSetListener generateDatePickerDialog() {
+
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+            public void onDateSet(DatePicker datePicker, int year,
+                                  int month, int day) {
                 String dayString = String.valueOf(day);
                 String monthString = String.valueOf(month+1);
-
-                if(day < 10)
-                {
-                    dayString = "0" + String.valueOf(day);
-                }
-                if (month+1 < 10)
-                {
-                    monthString = "0" + String.valueOf(month+1);
-                }
-
+                if(day < 10) { dayString = "0" + String.valueOf(day);}
+                if (month+1 < 10) { monthString = "0" + String.valueOf(month+1);}
                 mReunion.setmDate(dayString + "/" + monthString + "/" + year);
                 mDateTxt.setText(dayString + "/" + monthString + "/" + year);
                 updateSpinnerRoom();
@@ -250,14 +242,17 @@ public class AddReunionFragment extends Fragment implements MailListRecyclerView
     /**
      * Display a calendar
      */
-    private void configureDialogCalendar() {
+
+    private void configureDialogCalendar()
+    {
         Calendar cal = Calendar.getInstance();
+
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
         int day = cal.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog dialogDate = new DatePickerDialog(getContext(), mDateSetListener,
-                year, month, day);
+        DatePickerDialog dialogDate = new DatePickerDialog(getContext(), mDateSetListener, year, month, day);
+
         dialogDate.getDatePicker().setMinDate(System.currentTimeMillis());
         dialogDate.show();
     }

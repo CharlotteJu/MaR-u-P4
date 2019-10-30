@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Display ListReunionsFragment
      */
-    public void configureMainFragment()
+    private void configureMainFragment()
     {
         mListReunionsFragments = (ListReunionsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_list_reunions);
         if (mListReunionsFragments == null && findViewById(R.id.activity_details_container) == null)
@@ -120,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     /**
      * Display AddReunionFragment - Landscape
      */
@@ -134,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.activity_details_container, mAddReunionFragment).commit();
         }
     }
-
 
     /**
      * Configure the button to switch activity
@@ -225,19 +223,15 @@ public class MainActivity extends AppCompatActivity {
     private void configureSpinnerRoom()
     {
         AlertDialog.Builder mPopUp = new AlertDialog.Builder(this);
-
         View v = LayoutInflater.from(this).inflate(R.layout.dialog_spinner, null);
         Spinner spinner = v.findViewById(R.id.dsf_spinner);
-
         List<String> list = new ArrayList<>();
         for (int i = 0; i < RoomsGenerator.getListRooms().length; i ++)
         {
             list.add(RoomsGenerator.getListRooms()[i].getmName());
         }
-
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -257,9 +251,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
-
-        mPopUp.setTitle("Sélectionnez une valeur")
-                .setView(v)
+        mPopUp.setTitle("Sélectionnez une valeur").setView(v)
                 .setPositiveButton("Filtrer",
                         (dialog, which) -> {
                             mListReunionsFragments.mReunions = mApiService.filterRoom(mRoom);

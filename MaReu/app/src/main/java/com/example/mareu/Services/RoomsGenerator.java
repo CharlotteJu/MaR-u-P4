@@ -7,6 +7,7 @@ import com.example.mareu.R;
 public abstract class RoomsGenerator {
 
     private static Room[] LIST_ROOMS = {
+
             new Room("Salle 1", R.drawable.room_1),
             new Room("Salle 2", R.drawable.room_2),
             new Room("Salle 3", R.drawable.room_3),

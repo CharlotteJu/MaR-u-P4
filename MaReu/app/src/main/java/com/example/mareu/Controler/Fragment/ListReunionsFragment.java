@@ -51,7 +51,8 @@ public class ListReunionsFragment extends Fragment implements ReunionListRecycle
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         mApiService = DI.getNeighbourApiService();
         dimenSize = getResources().getInteger(R.integer.title_list_reunions_size) + dimenPlus;
@@ -73,11 +74,10 @@ public class ListReunionsFragment extends Fragment implements ReunionListRecycle
     /**
      * Init the List of neighbours
      */
-    private void initList()
-    {
+    private void initList() {
         ReunionsGenerator.getmReunions();
         mReunions = mApiService.getReunions();
-        adapter = new ReunionListRecyclerViewAdapter(mReunions, dimenSize, this::clickToDelete, this);
+        adapter = new ReunionListRecyclerViewAdapter(dimenSize, this::clickToDelete, this);
         mRecyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

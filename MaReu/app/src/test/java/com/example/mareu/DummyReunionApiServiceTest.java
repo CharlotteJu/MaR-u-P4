@@ -51,7 +51,7 @@ public class DummyReunionApiServiceTest {
             LIST_REUNIONS.add(r);
         }
     }
-
+    
     @Test
     public void getReunionsWithSuccess()
     {
@@ -125,6 +125,5 @@ public class DummyReunionApiServiceTest {
         assertTrue(compare.contains(reunion));
         assertEquals(compare.size(), 1);
     }
-
 
 }

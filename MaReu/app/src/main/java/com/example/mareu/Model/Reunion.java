@@ -12,17 +12,14 @@ public class Reunion
      * A list for the participants's emails
      */
     private List<String> mEmails;
-
     /**
      * The ref to for the Rooms
      */
     private Room mRoom;
-
     /**
      * To describe the meeting's subject
      */
     private String mSubject;
-
     /**
      * To put the time
      */

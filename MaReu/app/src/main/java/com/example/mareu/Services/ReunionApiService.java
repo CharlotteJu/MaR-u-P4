@@ -23,31 +23,32 @@ public interface ReunionApiService
      */
     void deleteReunion(Reunion reunion);
 
-
     /**
      * Add a metting
-     * @param reunion
+     * @param {@link List}
      */
     void addReunion(Reunion reunion);
+
 
     /**
      * Give a list of String for the rooms
      * @param reunion
-     * @return
+     * @return {@link List}
      */
     List<String> generateNameRooms(Reunion reunion);
 
     /**
      * Give a list of Reunions with the same date
      * @param date
-     * @return
+     * @return {@link List}
      */
     List<Reunion> filterDate(String date);
 
     /**
      * Give a list of Reunions with the same room
      * @param room
-     * @return
+     * @return {@link List}
      */
     List<Reunion> filterRoom(Room room);
+
 }

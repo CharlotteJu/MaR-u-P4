@@ -2,4 +2,6 @@
 <resources>
 
     <integer name="title_list_reunions_size">25</integer>
+
 </resources>
+

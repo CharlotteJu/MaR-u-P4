@@ -38,10 +38,11 @@ public class ReunionListRecyclerViewAdapter extends RecyclerView.Adapter<Reunion
     private clickToDeleteInterface mClickToDeleteInterface;
     private ListReunionsFragment fr;
 
-    public ReunionListRecyclerViewAdapter(List<Reunion> mReunions, int dimenSize, clickToDeleteInterface clickToDeleteInterface, ListReunionsFragment fragment) {
+    public ReunionListRecyclerViewAdapter(int dimenSize, clickToDeleteInterface
+            clickToDeleteInterface, ListReunionsFragment fragment) {
         this.mDimenSize = dimenSize;
         this.mClickToDeleteInterface = clickToDeleteInterface;
-        fr = fragment;
+        this.fr = fragment;
         this.mReunions = fr.mReunions;
     }
 
@@ -78,6 +79,10 @@ public class ReunionListRecyclerViewAdapter extends RecyclerView.Adapter<Reunion
 
         private clickToDeleteInterface mClickToDeleteInterface;
 
+        @Override
+        public void onClick(View view) {
+            mClickToDeleteInterface.clickToDelete(getAdapterPosition());
+        }
 
         public ViewHolder(@NonNull View itemView, clickToDeleteInterface clickToDeleteInterface) {
             super(itemView);
@@ -86,10 +91,7 @@ public class ReunionListRecyclerViewAdapter extends RecyclerView.Adapter<Reunion
             mButtonDelete.setOnClickListener(this);
         }
 
-        @Override
-        public void onClick(View view) {
-            mClickToDeleteInterface.clickToDelete(getAdapterPosition());
-        }
+
 
         /**
          * Update the elements of the reunion
@@ -98,9 +100,7 @@ public class ReunionListRecyclerViewAdapter extends RecyclerView.Adapter<Reunion
         public void updateInfos (Reunion reunion)
         {
             String title = reunion.getmSubject() + " - " + (reunion.getmDate()).substring(0,5) +" - " + reunion.getmTime() + " - " + reunion.getmRoom().getmName();
-
-            if(title.length() > mDimenSize)
-            {
+            if(title.length() > mDimenSize) {
                 title = title.substring(0,mDimenSize);
                 title+="...";
             }
