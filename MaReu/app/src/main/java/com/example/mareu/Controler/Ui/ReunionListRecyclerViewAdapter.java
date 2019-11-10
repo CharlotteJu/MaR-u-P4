@@ -34,13 +34,13 @@ public class ReunionListRecyclerViewAdapter extends RecyclerView.Adapter<Reunion
     }
 
     private List<Reunion> mReunions;
-    private int mDimenSize;
+    private int mIntegerSize;
     private clickToDeleteInterface mClickToDeleteInterface;
     private ListReunionsFragment fr;
 
-    public ReunionListRecyclerViewAdapter(int dimenSize, clickToDeleteInterface
+    public ReunionListRecyclerViewAdapter(int IntegerSize, clickToDeleteInterface
             clickToDeleteInterface, ListReunionsFragment fragment) {
-        this.mDimenSize = dimenSize;
+        this.mIntegerSize = IntegerSize;
         this.mClickToDeleteInterface = clickToDeleteInterface;
         this.fr = fragment;
         this.mReunions = fr.mReunions;
@@ -100,8 +100,8 @@ public class ReunionListRecyclerViewAdapter extends RecyclerView.Adapter<Reunion
         public void updateInfos (Reunion reunion)
         {
             String title = reunion.getmSubject() + " - " + (reunion.getmDate()).substring(0,5) +" - " + reunion.getmTime() + " - " + reunion.getmRoom().getmName();
-            if(title.length() > mDimenSize) {
-                title = title.substring(0,mDimenSize);
+            if(title.length() > mIntegerSize) {
+                title = title.substring(0,mIntegerSize);
                 title+="...";
             }
 
@@ -116,9 +116,9 @@ public class ReunionListRecyclerViewAdapter extends RecyclerView.Adapter<Reunion
             }
             mails += reunion.getmEmails().get(reunion.getmEmails().size()-1);
 
-            if(mails.length() > (mDimenSize+10))
+            if(mails.length() > (mIntegerSize+10))
             {
-                mails = mails.substring(0,(mDimenSize+10));
+                mails = mails.substring(0,(mIntegerSize+10));
                 mails+="...";
             }
 

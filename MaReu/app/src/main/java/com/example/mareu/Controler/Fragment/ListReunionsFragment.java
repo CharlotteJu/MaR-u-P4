@@ -34,8 +34,8 @@ public class ListReunionsFragment extends Fragment implements ReunionListRecycle
     public List<Reunion> mReunions;
     private ReunionApiService mApiService;
     private RecyclerView.Adapter adapter;
-    private int dimenSize; // Relative size for the text
-    private static int dimenPlus = 0;
+    private int IntegerSize; // Relative size for the text
+    private static int integerPlus = 0;
 
     public ListReunionsFragment() {
         // Required empty public constructor
@@ -45,7 +45,7 @@ public class ListReunionsFragment extends Fragment implements ReunionListRecycle
     {
         if (tablette == true)
         {
-            dimenPlus = 30;
+            integerPlus = 30;
         }
         return new ListReunionsFragment();
     }
@@ -55,7 +55,7 @@ public class ListReunionsFragment extends Fragment implements ReunionListRecycle
     {
         super.onCreate(savedInstanceState);
         mApiService = DI.getNeighbourApiService();
-        dimenSize = getResources().getInteger(R.integer.title_list_reunions_size) + dimenPlus;
+        IntegerSize = getResources().getInteger(R.integer.title_list_reunions_size) + integerPlus;
     }
 
     @Override
@@ -77,7 +77,7 @@ public class ListReunionsFragment extends Fragment implements ReunionListRecycle
     private void initList() {
         ReunionsGenerator.getmReunions();
         mReunions = mApiService.getReunions();
-        adapter = new ReunionListRecyclerViewAdapter(dimenSize, this::clickToDelete, this);
+        adapter = new ReunionListRecyclerViewAdapter(IntegerSize, this::clickToDelete, this);
         mRecyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
