@@ -8,7 +8,7 @@ README
 
 Cette application permet aux collaborateurs de Lamzone de réserver des salles de réunions. 
 
-Il est développé sur Android Studio sous Java 8 à compter de l'API 21. 
+Elle est développé sur Android Studio sous Java 8 à compter de l'API 21. 
 
 ## Fonctions principales
 
