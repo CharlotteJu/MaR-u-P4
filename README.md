@@ -1,9 +1,8 @@
-README 
-
-## Technos utilisées
+## Compétences utilisés 
 
 - Json
 - Filtre
+- RecyclerView
 
 # Ma Réu
 
