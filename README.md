@@ -1,5 +1,10 @@
 README 
 
+## Technos utilisées
+
+- Json
+- Filtre
+
 # Ma Réu
 
 # FR
